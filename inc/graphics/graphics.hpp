@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include "../models/world.hpp"
 #include "../tools/containers.hpp"
 #include "../logger/logger.hpp"

@@ -5,7 +5,7 @@
 #include <vector>
 #include <fstream>
 #include "../logger/logger.hpp"
-#include "../models/worldgen.hpp"
+#include "../tools/worldgen.hpp"
 #include "../tools/containers.hpp"
 
 class World{
@@ -19,6 +19,7 @@ private:
     std::vector<std::vector<int>> grass;
     BufferedLogger logger;
 public:
+    int h_map[width][height];
     World();
     bool isLandAt(int x, int y);
     int getGrassAt(int x, int y);

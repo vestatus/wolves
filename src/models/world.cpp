@@ -5,6 +5,8 @@
 World::World() {
     const int radius = 200;
     const int c_x=500, c_y=500;
+
+
     grass = std::vector<std::vector<int>>(width, std::vector<int>(height, 0));
 
     for(int X=0; X < width; X++)
@@ -22,17 +24,19 @@ World::World() {
 
 void World::generate() {
     int size = max(width, height);
-    Array2DKeeper<int> keeper(size, size);
-    Worldgen::diamondSquare(keeper.getArray2D(), size);
+    WorldGenerator generator(width, 1337);
+    Array2DKeeper<int> hmap(width, height);
 
-    for (int i=0;i<size;i++) for(int j=0;j<size;j++)
-        std::cout << keeper.getArray2D()[i][j] << " ";
+    generator.generate(hmap.getArray2D());
+    int** array2d = hmap.getArray2D();
 
     int thd = 0;
     for(int x=0;x<width;x++)
         for(int y=0;y<height;y++) {
-            land[x][y] = keeper.getArray2D()[x][y] > thd;
+            land[x][y] = array2d[x][y] > thd;
+            h_map[x][y] = array2d[x][y];
         }
+
 }
 
 bool World::isLandAt(int x, int y) {

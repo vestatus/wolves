@@ -45,19 +45,25 @@ void SFMLManager::drawWorld(World &world) {
     sf::Uint8* pixels = pxArray.getArray();
 
     bool isLand;
-    int grass;
+    int grass, ht, X, Y;
 
     for(int x=0;x<width;x++) for (int y=0;y<height;y++) {
         pixels[(y * width + x) * 4 + 3] = 230; // alpha channel
 
-        isLand = world.isLandAt(x * world.width / width, y * world.height / height);
-        grass=0;
-        if (isLand) grass = world.getGrassAt(x * world.width / width, y * world.height / height);
+        X = x * world.width / width;
+        Y = y * world.height / height;
 
-        pixels[(y * width + x) * 4 + 1] = isLand ? 128 : 0; // green
-        pixels[(y * width + x) * 4] = isLand ? 255 - grass * 255 / world.GRASS_MAX : 0; // red
+        ht = int(atan(world.h_map[X][Y] / 100) / 1.57 * 255);
 
-        if (!isLand) pixels[(y * width + x) * 4 + 2] = 128; // blue
+        grass = world.getGrassAt(X, Y);
+        isLand = world.isLandAt(X, Y);
+
+         if (isLand) {
+            pixels[(y * width + x) * 4 + 1] = 128; // green
+            pixels[(y * width + x) * 4] = 255 - grass * 255 / world.GRASS_MAX; // red
+         } else {
+            pixels[(y * width + x) * 4 + 2] = 255 + ht;
+         }
     }
     worldImage.update(pixels);
 

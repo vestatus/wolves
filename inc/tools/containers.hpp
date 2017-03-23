@@ -31,23 +31,22 @@ private:
     T** array;
     int size1, size2;
 public:
-    Array2DKeeper(int size1, int size2);
+    Array2DKeeper(int size1, int size2)
+    {
+        array = new T*[size1];
+        for(int i=0;i<size1;i++) array[i] = new T[size2];
+        this->size1 = size1;
+        this->size2 = size2;
+    }
+
     ~Array2DKeeper();
     T** getArray2D();
 };
 
 template <typename T>
-Array2DKeeper<T>::Array2DKeeper(int size1, int size2) {
-    array = new T*[size1];
-    for(int i=0;i<size1;i++) array[i] = new T[size2];
-    this->size1 = size1;
-    this->size2 = size2;
-}
-
-template <typename T>
 Array2DKeeper<T>::~Array2DKeeper() {
-    for(int i=0;i<size1;i++) delete[] array[i];
-    delete[] array;
+        for(int i=0;i<size1;i++) delete[] array[i];
+        delete[] array;
 }
 
 template <typename T>
