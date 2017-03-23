@@ -1,4 +1,4 @@
-with open("make/dependencies") as I:
+with open(".make/dependencies") as I:
     lines = [line for line in I.read().split("\n") if line !=
              "" and "#" not in line]
 
@@ -13,16 +13,16 @@ BIN = ./bin/main.bin
 
 all: $(BIN)
 
-self: make/dependencies make/make_self.py
-\t\tpython3 make/make_self.py
+self: .make/dependencies .make/make_self.py
+\t\tpython3 .make/make_self.py
 
 clean:
 \t\trm -rf bin obj && mkdir bin obj
 get-deps:
 		apt-get update
 		apt-get install $(REQUIREMENTS)
-test:
-		echo "no tests for now"
+test: ./bin/main.bin
+\t\t./bin/main.bin
 install: $(BIN)
 		cp $(BIN) $(INSTALL_PATH)
 uninstall:
