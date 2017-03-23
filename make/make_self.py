@@ -37,7 +37,7 @@ for line in lines:
     folder, name = main.split("/")
     files.add(name)
 
-    obj += "./obj/{0}.o: ./src/{1}/{2}.cpp ./src/{1}/{2}.hpp".format(
+    obj += "./obj/{0}.o: ./src/{1}/{2}.cpp ./inc/{1}/{2}.hpp".format(
         name, folder, name)
     for other in [file for file in others.split(" ") if file.strip() != ""]:
         ofolder, oname = other.split("/")

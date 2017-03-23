@@ -1,4 +1,4 @@
-#include "graphics.hpp"
+#include "../../inc/graphics/graphics.hpp"
 
 SFMLManager::SFMLManager(std::string title) {
     window.create(sf::VideoMode(width, height), title);

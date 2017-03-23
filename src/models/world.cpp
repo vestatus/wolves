@@ -1,4 +1,4 @@
-#include "world.hpp"
+#include "../../inc/models/world.hpp"
 #define min(x, y) ((x) < (y) ? (x) : (y))
 #define max(x, y) ((x) > (y) ? (x) : (y))
 

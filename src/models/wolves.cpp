@@ -1,1 +1,1 @@
-#include "wolves.hpp"
+#include "../../inc/models/wolves.hpp"

@@ -5,7 +5,7 @@
 #include <vector>
 #include <fstream>
 #include "../logger/logger.hpp"
-#include "worldgen.cpp"
+#include "../models/worldgen.hpp"
 #include "../tools/containers.hpp"
 
 class World{

@@ -1,6 +1,6 @@
-#include "graphics/graphics.hpp"
-#include "models/world.hpp"
-#include "models/hares.hpp"
+#include "../inc/graphics/graphics.hpp"
+#include "../inc/models/world.hpp"
+#include "../inc/models/hares.hpp"
 #include <iostream>
 #include <cstdio>
 
