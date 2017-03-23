@@ -34,6 +34,10 @@ void SFMLManager::render() {
     logger.log("window rendered", "SUCC");
 }
 
+float sigmoid(float x){
+    return 1/(1 + pow(2.71828, x));
+}
+
 
 void SFMLManager::drawWorld(World &world) {
     logger.log("drawing world", "INFO");
@@ -53,14 +57,15 @@ void SFMLManager::drawWorld(World &world) {
         X = x * world.width / width;
         Y = y * world.height / height;
 
-        ht = int(atan(world.h_map[X][Y] / 100) / 1.57 * 255);
+        ht = int(atan(world.h_map[X][Y] / 100) * 255 / 1.57);
 
         grass = world.getGrassAt(X, Y);
         isLand = world.isLandAt(X, Y);
 
          if (isLand) {
-            pixels[(y * width + x) * 4 + 1] = 128; // green
-            pixels[(y * width + x) * 4] = 255 - grass * 255 / world.GRASS_MAX; // red
+            pixels[(y * width + x) * 4 + 1] = 255 - ht / 2; // green
+            pixels[(y * width + x) * 4] = 255 - ht / 2 - grass;
+            pixels[(y * width + x) * 4 + 2] = 255 - ht / 2  - grass;
          } else {
             pixels[(y * width + x) * 4 + 2] = 255 + ht;
          }

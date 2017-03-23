@@ -2,8 +2,6 @@
 #include "../logger/logger.hpp"
 #include "../tools/random.hpp"
 
-typedef std::linear_congruential_engine<long unsigned int, 3ul, 641ul, 1000ul> my_random;
-
 class WorldGenerator {
 protected:
 	const float R = 0.01; // roughness
