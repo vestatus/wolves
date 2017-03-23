@@ -1,0 +1,35 @@
+.PHONY: all clean get-deps test install uninstall
+
+BIN = ./bin/main.bin
+INSTALL_PATH = /usr/bin/wolves
+REQUIREMENTS = libsfml-dev
+
+all: $(BIN)
+
+clean:
+		rm -rf bin obj && mkdir bin obj
+./obj/main.o: ./src/main.cpp
+		g++ -c -o ./obj/main.o ./src/main.cpp --std=c++11 -O2
+./obj/graphics.o: ./src/graphics/graphics.cpp ./src/graphics/graphics.hpp ./obj/world.o ./obj/containers.o ./obj/logger.o
+		g++ -c -o ./obj/graphics.o ./src/graphics/graphics.cpp --std=c++11 -O2
+./obj/hares.o: ./src/models/hares.cpp ./src/models/hares.hpp
+		g++ -c -o ./obj/hares.o ./src/models/hares.cpp --std=c++11 -O2
+./obj/world.o: ./src/models/world.cpp ./src/models/world.hpp ./obj/logger.o
+		g++ -c -o ./obj/world.o ./src/models/world.cpp --std=c++11 -O2
+./obj/containers.o: ./src/tools/containers.cpp ./src/tools/containers.hpp
+		g++ -c -o ./obj/containers.o ./src/tools/containers.cpp --std=c++11 -O2
+./obj/logger.o: ./src/logger/logger.cpp ./src/logger/logger.hpp
+		g++ -c -o ./obj/logger.o ./src/logger/logger.cpp --std=c++11 -O2
+
+
+$(BIN): ./obj/main.o ./obj/graphics.o ./obj/world.o ./obj/hares.o ./obj/containers.o ./obj/logger.o
+		g++ ./obj/main.o ./obj/graphics.o ./obj/hares.o ./obj/world.o ./obj/containers.o ./obj/logger.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+get-deps:
+		apt-get update
+		apt-get install $(REQUIREMENTS)
+test:
+		echo "no tests for now"
+install: $(BIN)
+		cp $(BIN) $(INSTALL_PATH)
+uninstall:
+		rm -f $(INSTALL_PATH)
