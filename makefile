@@ -7,16 +7,16 @@ BIN = ./bin/main.bin
 
 all: $(BIN)
 
-self: make/dependencies make/make_self.py
-		python3 make/make_self.py
+self: .make/dependencies .make/make_self.py
+		python3 .make/make_self.py
 
 clean:
 		rm -rf bin obj && mkdir bin obj
 get-deps:
 		apt-get update
 		apt-get install $(REQUIREMENTS)
-test:
-		echo "no tests for now"
+test: ./bin/main.bin
+		./bin/main.bin
 install: $(BIN)
 		cp $(BIN) $(INSTALL_PATH)
 uninstall:
@@ -46,5 +46,5 @@ uninstall:
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/logger.o ./obj/worldgen.o ./obj/world.o ./obj/graphics.o ./obj/wolves.o ./obj/main.o ./obj/containers.o ./obj/hares.o
-		g++ ./obj/logger.o ./obj/worldgen.o ./obj/world.o ./obj/graphics.o ./obj/wolves.o ./obj/main.o ./obj/containers.o ./obj/hares.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/hares.o ./obj/wolves.o ./obj/containers.o ./obj/worldgen.o ./obj/logger.o ./obj/main.o ./obj/graphics.o ./obj/world.o
+		g++ ./obj/hares.o ./obj/wolves.o ./obj/containers.o ./obj/worldgen.o ./obj/logger.o ./obj/main.o ./obj/graphics.o ./obj/world.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
