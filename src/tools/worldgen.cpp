@@ -17,11 +17,32 @@ void WorldGenerator::square(int** hmap, int w) {
 		for(int y = 0;y < size - 1; y += w) {
 			sum = hmap[x][y] + hmap[x + w][y] + hmap[x][y + w] + hmap[x + w][y + w];
 
-			hmap[x + w / 2][y + w / 2] = sum / 4 + int(w * 0.707 * R * random.next()); // +random
+			hmap[x + w / 2][y + w / 2] = sum / 4 + int(w * 0.707 * R * random.next());
 		}
 	}
 
-	diamond(hmap, w); // call diamond with w instead
+	diamond(hmap, w);
+}
+
+void WorldGenerator::smoothe(int** hmap) {
+	int res[size][size];
+	int n, sum;
+
+	for (int x = 0; x < size; x++)
+		for (int y = 0;y < size; y++) {
+			n = 1;
+			sum = hmap[x][y];
+
+			if (x > 0) {sum += hmap[x - 1][y]; n++;}
+			if (y > 0) {sum += hmap[x][y - 1]; n++;}
+			if (x < size - 1) {sum += hmap[x + 1][y]; n++;}
+			if (y < size - 1) {sum += hmap[x][y + 1]; n++;}
+
+			res[x][y] = sum / n;
+		}
+
+	for (int x = 0; x < size; x++)
+		for (int y = 0;y < size; y++) hmap[x][y] = res[x][y];
 }
 
 void WorldGenerator::diamond(int** hmap, int w) {
@@ -40,7 +61,7 @@ void WorldGenerator::diamond(int** hmap, int w) {
 			if (x < size - 1) {sum += hmap[x + w/2][y]; n++;}
 			if (y < size - 1) {sum += hmap[x][y + w/2]; n++;}
 
-			hmap[x][y] = sum / n + int(w * 0.5 * R * random.next()); // +random
+			hmap[x][y] = sum / n + int(w * 0.5 * R * random.next());
 		}
 
 		k++;
@@ -56,4 +77,6 @@ void WorldGenerator::generate(int** hmap) {
 	hmap[size - 1][size - 1] = 0;
 
 	square(hmap, size - 1);
+
+	smoothe(hmap);
 }

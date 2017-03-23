@@ -63,9 +63,9 @@ void SFMLManager::drawWorld(World &world) {
         isLand = world.isLandAt(X, Y);
 
          if (isLand) {
-            pixels[(y * width + x) * 4 + 1] = 255 - ht / 2; // green
-            pixels[(y * width + x) * 4] = 255 - ht / 2 - grass;
-            pixels[(y * width + x) * 4 + 2] = 255 - ht / 2  - grass;
+            pixels[(y * width + x) * 4 + 1] = ht / 2 + grass / 2; // green
+            //pixels[(y * width + x) * 4] = 255 - ht / 2 - grass;
+            //ixels[(y * width + x) * 4 + 2] = 255 - ht / 2  - grass;
          } else {
             pixels[(y * width + x) * 4 + 2] = 255 + ht;
          }

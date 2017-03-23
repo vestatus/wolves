@@ -10,6 +10,8 @@ public:
     T* getArray();
 };
 
+#pragma once
+
 template <typename T>
 ArrayKeeper<T>::ArrayKeeper(int size) {
     array = new T[size];

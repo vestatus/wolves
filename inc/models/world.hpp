@@ -12,7 +12,7 @@ class World{
 public:
     static const int width = 513;
     static const int height = 513;
-    static const int GRASS_MAX = 1000000;
+    static const int GRASS_MAX = 255;
     static constexpr double GRASS_GROWTH_RATE = 1.01;
 private:
     bool land[width][height];

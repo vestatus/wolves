@@ -60,7 +60,8 @@ void World::readIslands() {
 
     while(stream.good()) {
         stream >> x >> y >> r;
-        logger.log("loading island with x=" + std::to_string(x) + ", y=" + std::to_string(y) + " r=" + std::to_string(r), "INFO");
+        logger.log("loading island with x=" + std::to_string(x) + 
+            ", y=" + std::to_string(y) + " r=" + std::to_string(r), "INFO");
 
         for(int X=max(x-r, 0); X < min(x+r+1, width); X++)
             for(int Y=max(y-r, 0); Y < min(y+r+1, height); Y++)
@@ -76,7 +77,7 @@ void World::readIslands() {
 void World::spawnGrass() {
     logger.log("spawning grass", "INFO");
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {
-        grass[x][y] = land[x][y] ? int(std::rand()* 1.0 * GRASS_MAX / RAND_MAX) : 0;
+        grass[x][y] = (land[x][y] ? (0.5 * GRASS_MAX) : 0);
     }
     logger.log("grass spawned", "SUCC");
 }
@@ -84,6 +85,8 @@ void World::spawnGrass() {
 
 void World::tick() {
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {
-        if (grass[x][y] < GRASS_MAX - grass[x][y] * GRASS_GROWTH_RATE) grass[x][y] = int(GRASS_GROWTH_RATE * grass[x][y]);
+        if (grass[x][y] < GRASS_MAX - grass[x][y] * GRASS_GROWTH_RATE) {
+            grass[x][y] = int(GRASS_GROWTH_RATE * grass[x][y]);
+        }
     }
 }

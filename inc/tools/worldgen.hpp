@@ -1,3 +1,4 @@
+#pragma once
 #include <cstdlib>
 #include "../logger/logger.hpp"
 #include "../tools/random.hpp"
@@ -11,6 +12,7 @@ protected:
 
     void diamond(int** hmap, int w);
     void square(int** hmap, int w);
+    void smoothe(int** hmap);
 
 public:
     WorldGenerator(int size, int seed);
