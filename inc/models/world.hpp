@@ -7,6 +7,8 @@
 #include "../logger/logger.hpp"
 #include "../tools/worldgen.hpp"
 #include "../tools/containers.hpp"
+#include "../models/hares.hpp"
+#include "../tools/random.hpp"
 
 class World{
 public:
@@ -18,13 +20,21 @@ private:
     bool land[width][height];
     std::vector<std::vector<int>> grass;
     BufferedLogger logger;
+    MyRandom randomGenerator;
+
+    void spawnGrass();
+    void spawnHares();
+    void spawnWolves();
 public:
     int h_map[width][height];
-    World();
-    bool isLandAt(int x, int y);
+
+    pair<int, int> getRandomLand();
     int getGrassAt(int x, int y);
+    bool isLandAt(int x, int y);
     void readIslands();
-    void spawnGrass();
+    void spawnStuff();
     void generate();
     void tick();
+
+    World();
 };

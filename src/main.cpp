@@ -12,7 +12,7 @@ int main()
     World world;
     world.readIslands();
     world.generate();
-    world.spawnGrass();
+    world.spawnStuff();
     
     manager.drawWorld(world);
 

@@ -5,6 +5,7 @@ void MyRandom::init( int minVal, int maxVal, int seed ) {
     gen = std::mt19937(rd());
 }
 
+
 int MyRandom::next() {
     return dist(gen);
 }

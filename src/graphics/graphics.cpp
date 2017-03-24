@@ -38,6 +38,16 @@ float sigmoid(float x){
     return 1/(1 + pow(2.71828, x));
 }
 
+void SFMLManager::RGB(sf::Uint8* pixels, int x, int y, int r, int g, int b) {
+    if ((x < 0) || (y < 0) || (x >= width) || (y >= height)) return;
+
+    int pos = (y * width + x) * 4;
+
+    pixels[pos] = r;
+    pixels[pos + 1] = g;
+    pixels[pos + 2] = b;
+    pixels[pos + 3] = 255;
+}
 
 void SFMLManager::drawWorld(World &world) {
     logger.log("drawing world", "INFO");
@@ -52,27 +62,43 @@ void SFMLManager::drawWorld(World &world) {
     int grass, ht, X, Y;
 
     for(int x=0;x<width;x++) for (int y=0;y<height;y++) {
-        pixels[(y * width + x) * 4 + 3] = 230; // alpha channel
-
         X = x * world.width / width;
         Y = y * world.height / height;
 
-        ht = int(atan(world.h_map[X][Y] / 100) * 255 / 1.57);
+        ht = int(atan(world.h_map[X][Y] / 100) * 255 / 1.57); // scaling to fit infinity into [-256; 255]
 
         grass = world.getGrassAt(X, Y);
         isLand = world.isLandAt(X, Y);
 
          if (isLand) {
-            pixels[(y * width + x) * 4 + 1] = ht / 2 + grass / 2; // green
-            //pixels[(y * width + x) * 4] = 255 - ht / 2 - grass;
-            //ixels[(y * width + x) * 4 + 2] = 255 - ht / 2  - grass;
+            RGB(pixels, x, y, 0, ht / 2 + grass / 2, 0);
          } else {
-            pixels[(y * width + x) * 4 + 2] = 255 + ht;
+            RGB(pixels, x, y, 0, 0, 255 + ht); // ht < 0
          }
     }
-    worldImage.update(pixels);
 
-    worldImage.setSmooth(true);
+    int x, y;
+
+    for (list<Hare*>::iterator it=Hare::startOfHares(); it != Hare::endOfHares(); it++) {
+        X = (*it)->getX();
+        Y = (*it)->getY();
+
+        x = X * width / world.width;
+        y =  Y * height / world.height;
+
+        const int r = 5;
+
+        for ( int i = -r; i < r + 1; i++ ) 
+            for ( int j = -r; j < r + 1; j++ ) {
+                if ( (i * i + j * j) <= r * 2) {
+                    RGB(pixels, x + i, y + j, 127, 127, 127);
+                }
+            }
+
+    }
+
+
+    worldImage.update(pixels);
 
     sf::Sprite sprite;
     sprite.setTexture(worldImage);

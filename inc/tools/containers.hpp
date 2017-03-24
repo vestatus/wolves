@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 
 template <typename T>
 class ArrayKeeper {
@@ -9,8 +10,6 @@ public:
     ~ArrayKeeper();
     T* getArray();
 };
-
-#pragma once
 
 template <typename T>
 ArrayKeeper<T>::ArrayKeeper(int size) {
@@ -55,3 +54,16 @@ template <typename T>
 T** Array2DKeeper<T>::getArray2D() {
     return array;
 }
+
+
+template <typename A, typename B>
+struct pair {
+public:
+    A a;
+    B b;
+    pair(){}
+    pair(A _a, B _b) {
+        a = _a;
+        b = _b;
+    }
+};

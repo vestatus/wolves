@@ -27,16 +27,17 @@ void WorldGenerator::square(int** hmap, int w) {
 void WorldGenerator::smoothe(int** hmap) {
 	int res[size][size];
 	int n, sum;
+	int nb_imp = 1; // each neigbour is np_imp times as important as the cell itself
 
 	for (int x = 0; x < size; x++)
 		for (int y = 0;y < size; y++) {
-			n = 1;
+			n = 2;
 			sum = hmap[x][y];
 
-			if (x > 0) {sum += hmap[x - 1][y]; n++;}
-			if (y > 0) {sum += hmap[x][y - 1]; n++;}
-			if (x < size - 1) {sum += hmap[x + 1][y]; n++;}
-			if (y < size - 1) {sum += hmap[x][y + 1]; n++;}
+			if (x > 0) {sum += nb_imp * hmap[x - 1][y]; n += nb_imp;}
+			if (y > 0) {sum += nb_imp * hmap[x][y - 1]; n += nb_imp;}
+			if (x < size - 1) {sum += nb_imp * hmap[x + 1][y]; n += nb_imp;}
+			if (y < size - 1) {sum += nb_imp * hmap[x][y + 1]; n += nb_imp;}
 
 			res[x][y] = sum / n;
 		}

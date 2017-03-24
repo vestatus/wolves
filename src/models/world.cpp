@@ -6,6 +6,7 @@ World::World() {
     const int radius = 200;
     const int c_x=500, c_y=500;
 
+    randomGenerator.init(0, width, 1337);
 
     grass = std::vector<std::vector<int>>(width, std::vector<int>(height, 0));
 
@@ -37,6 +38,17 @@ void World::generate() {
             h_map[x][y] = array2d[x][y];
         }
 
+}
+
+pair<int, int> World::getRandomLand() {
+    int x, y;
+
+    do {
+        x = randomGenerator.next();
+        y = randomGenerator.next();
+    } while(!isLandAt(x, y));
+
+    return pair<int, int>(x, y);
 }
 
 bool World::isLandAt(int x, int y) {
@@ -89,4 +101,24 @@ void World::tick() {
             grass[x][y] = int(GRASS_GROWTH_RATE * grass[x][y]);
         }
     }
+
+    Hare::takeTurns();
+}
+
+void World::spawnStuff() {
+    spawnGrass();
+    spawnHares();
+    spawnWolves();
+}
+
+void World::spawnHares() {
+    pair<int, int> coords;
+    for (int i=0; i<100;i++) {
+        coords = getRandomLand();
+        Hare::spawnHare(coords.a, coords.b);
+    }
+}
+
+void World::spawnWolves() {
+
 }
