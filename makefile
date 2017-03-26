@@ -27,7 +27,7 @@ uninstall:
 ./obj/random.o: ./src/tools/random.cpp ./inc/tools/random.hpp
 		g++ -c -o ./obj/random.o ./src/tools/random.cpp --std=c++11 -O2
 
-./obj/hares.o: ./src/models/hares.cpp ./inc/models/hares.hpp
+./obj/hares.o: ./src/models/hares.cpp ./inc/models/hares.hpp ./inc/models/world.hpp
 		g++ -c -o ./obj/hares.o ./src/models/hares.cpp --std=c++11 -O2
 
 ./obj/wolves.o: ./src/models/wolves.cpp ./inc/models/wolves.hpp
@@ -39,7 +39,7 @@ uninstall:
 ./obj/worldgen.o: ./src/tools/worldgen.cpp ./inc/tools/worldgen.hpp ./inc/logger/logger.hpp ./inc/tools/random.hpp
 		g++ -c -o ./obj/worldgen.o ./src/tools/worldgen.cpp --std=c++11 -O2
 
-./obj/world.o: ./src/models/world.cpp ./inc/models/world.hpp ./inc/tools/worldgen.hpp ./inc/tools/containers.hpp ./inc/models/hares.hpp
+./obj/world.o: ./src/models/world.cpp ./inc/models/world.hpp ./inc/tools/worldgen.hpp ./inc/tools/containers.hpp ./inc/tools/random.hpp
 		g++ -c -o ./obj/world.o ./src/models/world.cpp --std=c++11 -O2
 
 ./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./inc/logger/logger.hpp ./inc/models/world.hpp ./inc/tools/containers.hpp ./inc/models/hares.hpp
@@ -49,5 +49,5 @@ uninstall:
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/wolves.o ./obj/hares.o ./obj/random.o ./obj/graphics.o ./obj/logger.o ./obj/containers.o ./obj/worldgen.o ./obj/world.o ./obj/main.o
-		g++ ./obj/wolves.o ./obj/hares.o ./obj/random.o ./obj/graphics.o ./obj/logger.o ./obj/containers.o ./obj/worldgen.o ./obj/world.o ./obj/main.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/graphics.o ./obj/main.o ./obj/worldgen.o ./obj/wolves.o ./obj/world.o ./obj/containers.o ./obj/random.o ./obj/hares.o ./obj/logger.o
+		g++ ./obj/graphics.o ./obj/main.o ./obj/worldgen.o ./obj/wolves.o ./obj/world.o ./obj/containers.o ./obj/random.o ./obj/hares.o ./obj/logger.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system

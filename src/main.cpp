@@ -12,7 +12,9 @@ int main()
     World world;
     world.readIslands();
     world.generate();
-    world.spawnStuff();
+    world.spawnGrass();
+    Hare::spawnHares(&world);
+
     
     manager.drawWorld(world);
 
@@ -21,6 +23,12 @@ int main()
     {
         // handle events
         if (!manager.checkCloseEvent()) {
+
+        
+
+            Hare::takeTurns(&world);
+
+
             world.tick();
             
             manager.drawWorld(world);

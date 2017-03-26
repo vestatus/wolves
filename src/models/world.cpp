@@ -101,24 +101,20 @@ void World::tick() {
             grass[x][y] = int(GRASS_GROWTH_RATE * grass[x][y]);
         }
     }
-
-    Hare::takeTurns();
 }
 
-void World::spawnStuff() {
-    spawnGrass();
-    spawnHares();
-    spawnWolves();
-}
 
-void World::spawnHares() {
-    pair<int, int> coords;
-    for (int i=0; i<100;i++) {
-        coords = getRandomLand();
-        Hare::spawnHare(coords.a, coords.b);
+int World::cutGrass(int x, int y, int r) {
+    const float k = 0.01;
+    int d;
+
+    int sum = 0;
+    for (int i=-r;i<r+1;i++) for(int j=-r;j<r+1;j++) {
+        if ((x + i >= 0) && (x + i < width) && (y + j >=0) && (y + j < height)) {
+            d = grass[x+i][y+j] * k;
+            grass[x+i][y+j] -= d;
+            sum += d;
+        }
     }
-}
-
-void World::spawnWolves() {
-
+    return sum;
 }

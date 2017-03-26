@@ -7,7 +7,6 @@
 #include "../logger/logger.hpp"
 #include "../tools/worldgen.hpp"
 #include "../tools/containers.hpp"
-#include "../models/hares.hpp"
 #include "../tools/random.hpp"
 
 class World{
@@ -22,17 +21,15 @@ private:
     BufferedLogger logger;
     MyRandom randomGenerator;
 
-    void spawnGrass();
-    void spawnHares();
-    void spawnWolves();
 public:
     int h_map[width][height];
 
     pair<int, int> getRandomLand();
+    void spawnGrass();
     int getGrassAt(int x, int y);
+    int cutGrass(int x, int y, int r);
     bool isLandAt(int x, int y);
     void readIslands();
-    void spawnStuff();
     void generate();
     void tick();
 
