@@ -71,7 +71,15 @@ void SFMLManager::drawWorld(World &world) {
         isLand = world.isLandAt(X, Y);
 
          if (isLand) {
-            RGB(pixels, x, y, 0, (DRAW_HEIGHT ? (ht / 2) : 0) + grass / 2, 0);
+            HSV_to_RGB::hsv cl_hsv;
+            cl_hsv.h = 100;
+            cl_hsv.s = 1 - (ht / 255.0);
+            cl_hsv.v = grass * 1.0 / world.GRASS_MAX;
+
+            HSV_to_RGB::rgb cl_rgb = HSV_to_RGB::hsv2rgb(cl_hsv);
+            RGB(pixels, x, y, cl_rgb.r * 255, cl_rgb.g * 255, cl_rgb.b * 255);
+
+            //RGB(pixels, x, y, 0, (DRAW_HEIGHT ? (ht / 2) : 0) + grass / 2, 0);
          } else {
             RGB(pixels, x, y, 0, 0, 255 + ht); // ht < 0
          }
@@ -91,7 +99,7 @@ void SFMLManager::drawWorld(World &world) {
         for ( int i = -r; i < r + 1; i++ ) 
             for ( int j = -r; j < r + 1; j++ ) {
                 if ( (i * i + j * j) <= r * 2) {
-                    RGB(pixels, x + i, y + j, 127, 127, 127);
+                    RGB(pixels, x + i, y + j, 127, 0, 0);
                 }
             }
 

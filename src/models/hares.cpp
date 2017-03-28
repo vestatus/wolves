@@ -34,7 +34,14 @@ void Hare::takeTurns(World* world) {
 }
 
 pair<float, float> Hare::decideWhereToGo(World* world) {
-	return vectorRandom.next();
+	if (turnsMoves--) return direction;
+	else if (world->cutGrass(x, y, 5, hunger, false) > 10) {
+		return pair<float, float>(0.0, 0.0);
+	} else {
+		direction = vectorRandom.next();
+		turnsMoves = 20;
+		return direction;
+	}
 }
 
 void Hare::die(Hare* hare) { // may cause nullpointerexception in the future...

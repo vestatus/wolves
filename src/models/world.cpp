@@ -96,15 +96,16 @@ void World::spawnGrass() {
 
 
 void World::tick() {
+    // grow grass
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {
         if (grass[x][y] < GRASS_MAX - grass[x][y] * GRASS_GROWTH_RATE) {
-            grass[x][y] = int(GRASS_GROWTH_RATE * grass[x][y]);
+            grass[x][y]++;// = int(GRASS_GROWTH_RATE * grass[x][y]);
         }
     }
 }
 
 
-int World::cutGrass(int x, int y, int r, int max) { // not tested, amy be buggy
+int World::cutGrass(int x, int y, int r, int max, bool forReal) { // not tested, amy be buggy
     const float k = 0.1;
     int d;
     int cutting[2 * r + 1][2 * r + 1];
@@ -130,7 +131,7 @@ int World::cutGrass(int x, int y, int r, int max) { // not tested, amy be buggy
     for (int i=-r;i<r+1;i++) for(int j=-r;j<r+1;j++) {
         if ((x + i >= 0) && (x + i < width) && (y + j >=0) && (y + j < height)) {
             d = cutting[r + i][r + j];
-            grass[x+i][y+j] -= d;
+            if (forReal) grass[x+i][y+j] -= d;
             sum += d;
         }
     }

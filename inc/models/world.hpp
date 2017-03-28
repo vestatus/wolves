@@ -14,7 +14,7 @@ public:
     static const int width = 513;
     static const int height = 513;
     static const int GRASS_MAX = 255;
-    static constexpr double GRASS_GROWTH_RATE = 1.01;
+    static constexpr double GRASS_GROWTH_RATE = 1.02;
 private:
     bool land[width][height];
     std::vector<std::vector<int>> grass;
@@ -27,7 +27,7 @@ public:
     pair<int, int> getRandomLand();
     void spawnGrass();
     int getGrassAt(int x, int y);
-    int cutGrass(int x, int y, int r, int max);
+    int cutGrass(int x, int y, int r, int max, bool forReal=true);
     bool isLandAt(int x, int y);
     void readIslands();
     void generate();

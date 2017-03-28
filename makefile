@@ -36,18 +36,21 @@ uninstall:
 ./obj/containers.o: ./src/tools/containers.cpp ./inc/tools/containers.hpp
 		g++ -c -o ./obj/containers.o ./src/tools/containers.cpp --std=c++11 -O2
 
+./obj/algorythms.o: ./src/tools/algorythms.cpp ./inc/tools/algorythms.hpp
+		g++ -c -o ./obj/algorythms.o ./src/tools/algorythms.cpp --std=c++11 -O2
+
 ./obj/worldgen.o: ./src/tools/worldgen.cpp ./inc/tools/worldgen.hpp ./inc/logger/logger.hpp ./inc/tools/random.hpp
 		g++ -c -o ./obj/worldgen.o ./src/tools/worldgen.cpp --std=c++11 -O2
 
 ./obj/world.o: ./src/models/world.cpp ./inc/models/world.hpp ./inc/tools/worldgen.hpp ./inc/tools/containers.hpp ./inc/tools/random.hpp
 		g++ -c -o ./obj/world.o ./src/models/world.cpp --std=c++11 -O2
 
-./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./inc/logger/logger.hpp ./inc/models/world.hpp ./inc/tools/containers.hpp ./inc/models/hares.hpp
+./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./inc/logger/logger.hpp ./inc/models/world.hpp ./inc/tools/containers.hpp ./inc/models/hares.hpp ./inc/tools/algorythms.hpp
 		g++ -c -o ./obj/graphics.o ./src/graphics/graphics.cpp --std=c++11 -O2
 
 ./obj/main.o: ./src/./main.cpp ./inc/./main.hpp ./inc/logger/logger.hpp ./inc/tools/containers.hpp ./inc/graphics/graphics.hpp ./inc/models/hares.hpp ./inc/models/wolves.hpp
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/random.o ./obj/logger.o ./obj/main.o ./obj/world.o ./obj/worldgen.o ./obj/hares.o ./obj/containers.o ./obj/graphics.o ./obj/wolves.o
-		g++ ./obj/random.o ./obj/logger.o ./obj/main.o ./obj/world.o ./obj/worldgen.o ./obj/hares.o ./obj/containers.o ./obj/graphics.o ./obj/wolves.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/wolves.o ./obj/hares.o ./obj/world.o ./obj/graphics.o ./obj/containers.o ./obj/random.o ./obj/logger.o ./obj/algorythms.o ./obj/main.o ./obj/worldgen.o
+		g++ ./obj/wolves.o ./obj/hares.o ./obj/world.o ./obj/graphics.o ./obj/containers.o ./obj/random.o ./obj/logger.o ./obj/algorythms.o ./obj/main.o ./obj/worldgen.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system

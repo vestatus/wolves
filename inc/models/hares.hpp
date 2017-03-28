@@ -17,6 +17,8 @@ protected:
 	void takeTurn(World* world);
 	Hare();
     Vector2DRandom vectorRandom;
+    pair<float, float> direction;
+    int turnsMoves=0;
 public:
 	static void takeTurns(World* world);
 	static list<Hare*>::iterator startOfHares();
