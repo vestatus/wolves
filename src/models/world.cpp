@@ -31,7 +31,7 @@ void World::generate() {
     generator.generate(hmap.getArray2D());
     int** array2d = hmap.getArray2D();
 
-    int thd = 200;
+    int thd = 0;
     for(int x=0;x<width;x++)
         for(int y=0;y<height;y++) {
             land[x][y] = array2d[x][y] > thd;

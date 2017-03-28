@@ -65,7 +65,7 @@ void SFMLManager::drawWorld(World &world) {
         X = x * world.width / width;
         Y = y * world.height / height;
 
-        ht = int(atan(world.h_map[X][Y] / 100) * 255 / 1.57); // scaling to fit infinity into [-256; 255]
+        ht = int(atan(world.h_map[X][Y] / (SMOOTH_LANDSCAPE ? 100.0 : 100)) * 255 / 1.57); // scaling to fit infinity into [-256; 255]
 
         grass = world.getGrassAt(X, Y);
         isLand = world.isLandAt(X, Y);
