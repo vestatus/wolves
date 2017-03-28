@@ -31,7 +31,7 @@ void World::generate() {
     generator.generate(hmap.getArray2D());
     int** array2d = hmap.getArray2D();
 
-    int thd = 0;
+    int thd = 200;
     for(int x=0;x<width;x++)
         for(int y=0;y<height;y++) {
             land[x][y] = array2d[x][y] > thd;
@@ -119,6 +119,8 @@ int World::cutGrass(int x, int y, int r, int max, bool forReal) { // not tested,
         }
     }
 
+    //std::cout << "sum1 " << sum << " max " << max <<"\n";
+
     if (sum > max) {
         for (int i=0;i<2*r+1;i++) for(int j=0;j<2*r+1;j++) {
             cutting[i][j] *= max;
@@ -135,6 +137,8 @@ int World::cutGrass(int x, int y, int r, int max, bool forReal) { // not tested,
             sum += d;
         }
     }
+
+    //std::cout << "sum2 " << sum << "\n";
 
     return sum;
 }

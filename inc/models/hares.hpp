@@ -10,8 +10,6 @@ class Hare {
 protected:
 	static list<Hare*> hares;
 	static list<Hare*> dead;
-	static const int maxHunger = 1000;
-	static const int hungerRate = 100;
 	int hunger;
 	float x, y;
 	void takeTurn(World* world);
@@ -20,6 +18,8 @@ protected:
     pair<float, float> direction;
     int turnsMoves=0;
 public:
+	static const int maxHunger = 1000;
+	static const int hungerRate = 10;
 	static void takeTurns(World* world);
 	static list<Hare*>::iterator startOfHares();
 	static list<Hare*>::iterator endOfHares();
@@ -31,6 +31,7 @@ public:
 	float getX();
 	float getY();
 	float getSpeed(World* world);
+	int getHunger();
 
 	Hare(int x, int y);
 };

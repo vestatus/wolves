@@ -35,13 +35,17 @@ void Hare::takeTurns(World* world) {
 
 pair<float, float> Hare::decideWhereToGo(World* world) {
 	if (turnsMoves--) return direction;
-	else if (world->cutGrass(x, y, 5, hunger, false) > 10) {
+	else if (world->cutGrass(x, y, 5, hunger, false) > hungerRate) {
 		return pair<float, float>(0.0, 0.0);
 	} else {
 		direction = vectorRandom.next();
 		turnsMoves = 20;
 		return direction;
 	}
+}
+
+int Hare::getHunger() {
+	return hunger;
 }
 
 void Hare::die(Hare* hare) { // may cause nullpointerexception in the future...
@@ -60,10 +64,18 @@ void Hare::checkDead() {
 }
 
 void Hare::takeTurn(World* world) {
-	hunger += hungerRate;
 
-	if (hunger > 0)
-		hunger = max(0, hunger - world->cutGrass(x, y, 5, hunger));
+	hunger += hungerRate;
+	if (hunger > maxHunger) Hare::die(this);
+
+
+	if (world->isLandAt(x, y)) {
+
+		if (hunger > 0) {
+			hunger = max(0, hunger - world->cutGrass(x, y, 2, hunger));
+			//std::cout << "eat " << (hunger - world->cutGrass(x, y, 2, hunger, false)) << "\n";
+		}
+	}
 
 	//std::cout << hunger << "\n";
 
@@ -74,7 +86,6 @@ void Hare::takeTurn(World* world) {
 	x += vec.a * getSpeed(world);
 	y += vec.b * getSpeed(world);
 
-	if (hunger > maxHunger) Hare::die(this);
 
 }
 

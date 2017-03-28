@@ -96,10 +96,12 @@ void SFMLManager::drawWorld(World &world) {
 
         const int r = 5;
 
+        int hung = (*it)->getHunger() * 255 / (*it)->maxHunger;
+
         for ( int i = -r; i < r + 1; i++ ) 
             for ( int j = -r; j < r + 1; j++ ) {
                 if ( (i * i + j * j) <= r * 2) {
-                    RGB(pixels, x + i, y + j, 127, 0, 0);
+                    RGB(pixels, x + i, y + j, hung, 255 - hung, 0);
                 }
             }
 
