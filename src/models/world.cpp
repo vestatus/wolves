@@ -104,17 +104,36 @@ void World::tick() {
 }
 
 
-int World::cutGrass(int x, int y, int r) {
-    const float k = 0.01;
+int World::cutGrass(int x, int y, int r, int max) { // not tested, amy be buggy
+    const float k = 0.1;
     int d;
+    int cutting[2 * r + 1][2 * r + 1];
 
     int sum = 0;
     for (int i=-r;i<r+1;i++) for(int j=-r;j<r+1;j++) {
         if ((x + i >= 0) && (x + i < width) && (y + j >=0) && (y + j < height)) {
             d = grass[x+i][y+j] * k;
+            cutting[r + i][r + j] = d;
+            sum += d;
+        }
+    }
+
+    if (sum > max) {
+        for (int i=0;i<2*r+1;i++) for(int j=0;j<2*r+1;j++) {
+            cutting[i][j] *= max;
+            cutting[i][j] /= sum;
+        }
+    }
+
+    sum = 0;
+
+    for (int i=-r;i<r+1;i++) for(int j=-r;j<r+1;j++) {
+        if ((x + i >= 0) && (x + i < width) && (y + j >=0) && (y + j < height)) {
+            d = cutting[r + i][r + j];
             grass[x+i][y+j] -= d;
             sum += d;
         }
     }
+
     return sum;
 }

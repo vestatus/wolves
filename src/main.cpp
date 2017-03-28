@@ -14,7 +14,6 @@ int main()
     world.generate();
     world.spawnGrass();
     Hare::spawnHares(&world);
-
     
     manager.drawWorld(world);
 

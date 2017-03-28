@@ -17,19 +17,58 @@ void Hare::spawnHare(int x, int y) {
 	hares.push_back(ptr);
 }
 
-int Hare::getSpeed() {
-	return 255 - hunger;
+float Hare::getSpeed(World* world) {
+	float res = 1.0 - hunger / 255.0;
+	if (! world->isLandAt(round(x), round(y))) {
+		res /= 5;
+	}
+	return res;
 }
 
 void Hare::takeTurns(World* world) {
 	for(list<Hare*>::iterator it=hares.begin(); it != hares.end(); it++) {
 		(*it)->takeTurn(world);
 	}
+
+	checkDead();
+}
+
+pair<float, float> Hare::decideWhereToGo(World* world) {
+	return vectorRandom.next();
+}
+
+void Hare::die(Hare* hare) { // may cause nullpointerexception in the future...
+	dead.push_back(hare);
+}
+
+list<Hare*> Hare::dead;
+
+void Hare::checkDead() {
+	for(auto it = dead.begin(); it != dead.end(); it ++) {
+		hares.remove(*it);
+		std::cout << "a hare dies\n";
+		delete *it;
+	}
+	dead.clear();
 }
 
 void Hare::takeTurn(World* world) {
-	hunger = max(0, hunger - world->cutGrass(x, y, 5));
-	x++;
+	hunger += hungerRate;
+
+	if (hunger > 0)
+		hunger = max(0, hunger - world->cutGrass(x, y, 5, hunger));
+
+	//std::cout << hunger << "\n";
+
+	auto vec = decideWhereToGo(world);
+
+	//std::cout << (int)vec.a << " " << (int)vec.b << "\n";
+
+	x += vec.a * getSpeed(world);
+	y += vec.b * getSpeed(world);
+
+	if (hunger > maxHunger) Hare::die(this);
+
 }
 
 void Hare::spawnHares(World* world) {
@@ -49,10 +88,10 @@ list<Hare*>::iterator Hare::endOfHares() {
 	return hares.end();
 }
 
-int Hare::getX() {
+float Hare::getX() {
 	return x;
 }
 
-int Hare::getY() {
+float Hare::getY() {
 	return y;
 }

@@ -27,7 +27,7 @@ public:
     pair<int, int> getRandomLand();
     void spawnGrass();
     int getGrassAt(int x, int y);
-    int cutGrass(int x, int y, int r);
+    int cutGrass(int x, int y, int r, int max);
     bool isLandAt(int x, int y);
     void readIslands();
     void generate();

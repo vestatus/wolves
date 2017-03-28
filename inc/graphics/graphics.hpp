@@ -16,6 +16,7 @@ public:
     static const int width = 1000;
     static const int height = 500;
     static const int framerate = 60;
+    static const bool DRAW_HEIGHT = false;
 
     SFMLManager(std::string title);
     bool checkCloseEvent();

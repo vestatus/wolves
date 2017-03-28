@@ -71,7 +71,7 @@ void SFMLManager::drawWorld(World &world) {
         isLand = world.isLandAt(X, Y);
 
          if (isLand) {
-            RGB(pixels, x, y, 0, ht / 2 + grass / 2, 0);
+            RGB(pixels, x, y, 0, (DRAW_HEIGHT ? (ht / 2) : 0) + grass / 2, 0);
          } else {
             RGB(pixels, x, y, 0, 0, 255 + ht); // ht < 0
          }
