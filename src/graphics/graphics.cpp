@@ -65,7 +65,7 @@ void SFMLManager::drawWorld(World &world) {
         X = x * world.width / width;
         Y = y * world.height / height;
 
-        ht = int(atan(world.h_map[X][Y] / (SMOOTH_LANDSCAPE ? 100.0 : 100)) * 255 / 1.57); // scaling to fit infinity into [-256; 255]
+        ht = int(atan((world.h_map[X][Y] - World::SEA_LEVEL) / (SMOOTH_LANDSCAPE ? 100.0 : 100)) * 255 / 1.57); // scaling to fit infinity into [-256; 255]
 
         grass = world.getGrassAt(X, Y);
         isLand = world.isLandAt(X, Y);
@@ -73,7 +73,7 @@ void SFMLManager::drawWorld(World &world) {
          if (isLand) {
             HSV_to_RGB::hsv cl_hsv;
             cl_hsv.h = 100;
-            cl_hsv.s = 1 - (ht / 255.0);
+            cl_hsv.s = 1 - (ht / 512.0);
             cl_hsv.v = grass * 1.0 / world.GRASS_MAX;
 
             HSV_to_RGB::rgb cl_rgb = HSV_to_RGB::hsv2rgb(cl_hsv);

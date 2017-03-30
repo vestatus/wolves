@@ -18,7 +18,7 @@ public:
     static const int height = 500;
     static const int framerate = 60;
     static const bool DRAW_HEIGHT = false;
-    static const bool SMOOTH_LANDSCAPE = true;
+    static const bool SMOOTH_LANDSCAPE = false;
 
     SFMLManager(std::string title);
     bool checkCloseEvent();

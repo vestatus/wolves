@@ -2,6 +2,10 @@
 #define min(x, y) ((x) < (y) ? (x) : (y))
 #define max(x, y) ((x) > (y) ? (x) : (y))
 
+
+
+int World::SEA_LEVEL=0;
+
 World::World() {
     const int radius = 200;
     const int c_x=500, c_y=500;
@@ -10,20 +14,12 @@ World::World() {
 
     grass = std::vector<std::vector<int>>(width, std::vector<int>(height, 0));
 
-    for(int X=0; X < width; X++)
-        for(int Y=0; Y < height; Y++)
-        {
-            if (pow(c_x - X, 2) + pow(c_y - Y, 2) <= pow(radius, 2))
-                land[X][Y] = true;
-            else
-                land[X][Y] = false;
-        }
-
     logger = BufferedLogger("world");
     logger.log("world created", "SUCC");    
 }
 
 void World::generate() {
+
     int size = max(width, height);
     WorldGenerator generator(width, 1337);
     Array2DKeeper<int> hmap(width, height);
@@ -34,7 +30,6 @@ void World::generate() {
     int thd = 0;
     for(int x=0;x<width;x++)
         for(int y=0;y<height;y++) {
-            land[x][y] = array2d[x][y] > thd;
             h_map[x][y] = array2d[x][y];
         }
 
@@ -53,7 +48,7 @@ pair<int, int> World::getRandomLand() {
 
 bool World::isLandAt(int x, int y) {
     if ((x >= 0) && (x < width) && (y >= 0) && (y < height)) {
-        return land[x][y];
+        return h_map[x][y] > SEA_LEVEL;
     }
     else {
         return false;
@@ -67,7 +62,7 @@ int World::getGrassAt(int x, int y) {
 void World::spawnGrass() {
     logger.log("spawning grass", "INFO");
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {
-        grass[x][y] = (land[x][y] ? (0.5 * GRASS_MAX) : 0);
+        grass[x][y] = (isLandAt(x, y) ? (0.5 * GRASS_MAX) : 0);
     }
     logger.log("grass spawned", "SUCC");
 }

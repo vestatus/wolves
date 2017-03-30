@@ -14,9 +14,9 @@ public:
     static const int width = 513;
     static const int height = 513;
     static const int GRASS_MAX = 255;
+    static int SEA_LEVEL;
     static constexpr double GRASS_GROWTH_RATE = 1.02;
 private:
-    bool land[width][height];
     std::vector<std::vector<int>> grass;
     BufferedLogger logger;
     MyRandom randomGenerator;
