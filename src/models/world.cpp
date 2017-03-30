@@ -64,28 +64,6 @@ int World::getGrassAt(int x, int y) {
     return grass[x][y];
 }
 
-void World::readIslands() {
-    std::fstream stream("res/islands.txt", std::ios_base::in);
-
-    int x, y, r;
-
-
-    while(stream.good()) {
-        stream >> x >> y >> r;
-        logger.log("loading island with x=" + std::to_string(x) + 
-            ", y=" + std::to_string(y) + " r=" + std::to_string(r), "INFO");
-
-        for(int X=max(x-r, 0); X < min(x+r+1, width); X++)
-            for(int Y=max(y-r, 0); Y < min(y+r+1, height); Y++)
-            {
-                if (pow(x - X, 2) + pow(y - Y, 2) <= pow(r, 2)) {
-                    land[X][Y] = true;
-                }
-            }
-    }
-    logger.log("islands loaded", "SUCC");
-}
-
 void World::spawnGrass() {
     logger.log("spawning grass", "INFO");
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {

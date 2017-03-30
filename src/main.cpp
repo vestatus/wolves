@@ -10,7 +10,6 @@ int main()
     // create the window
     SFMLManager manager("Wolves, hares and grass");
     World world;
-    world.readIslands();
     world.generate();
     world.spawnGrass();
     Hare::spawnHares(&world);
