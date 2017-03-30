@@ -1,8 +1,10 @@
 logger/logger:
-models/worldgen: logger/logger
-models/world: models/worldgen tools/containers
+tools/random:
+tools/worldgen: logger/logger tools/random
+models/world: tools/worldgen tools/containers
 models/hares:
 models/wolves:
 tools/containers:
-graphics/graphics: logger/logger models/world tools/containers
+tools/algorythms:
+graphics/graphics: logger/logger models/world tools/containers tools/algorythms
 ./main: logger/logger tools/containers graphics/graphics models/hares models/wolves
