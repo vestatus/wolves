@@ -3,6 +3,9 @@
 #include "../logger/logger.hpp"
 #include "../tools/random.hpp"
 
+
+// This is an implementation of the DiamondSquare algorythm (https://habrahabr.ru/post/111538/)
+// It generates a realistic fractal heigthmap
 class WorldGenerator {
 protected:
 	const float R = 0.01; // roughness

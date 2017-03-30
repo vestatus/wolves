@@ -4,6 +4,9 @@
 #include <random>
  
 
+// This class is responsible for generating random numbers in a given range
+// It should ideally provide a uniform distribution
+// The numbers it returns are not truly random, and the sequence of them has a period
 class MyRandom
 {
     std::random_device rd;
@@ -16,6 +19,9 @@ public:
     int next();
 };
 
+
+// A random generator returning length-1 randomly oriented vectors
+// It uses MyRandom to generate a random angle and the returns its cos and sin a vector
 class Vector2DRandom {
 	MyRandom* random = nullptr;
 public:

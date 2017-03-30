@@ -1,6 +1,15 @@
 #pragma once
 #include <list>
 
+
+// This class is intended to encapsulate dynamic memory management.
+// The most important thing it does it deleting[] the dynamic array and thus preventing memory leaks.
+// It should be used like this:
+// > ArrayKeeper<float> foo(42);
+// > float* bar = foo.getArray();
+// [ do smth with items of bar ]
+// ???
+// Profit! When foo is destroyed, bar is automatically deleted
 template <typename T>
 class ArrayKeeper {
 private:
@@ -26,6 +35,8 @@ T* ArrayKeeper<T>::getArray() {
     return array;
 }
 
+
+// A 2-dimmensional equivalent of ArrayKeeper
 template <typename T>
 class Array2DKeeper {
 private:
@@ -55,9 +66,8 @@ T** Array2DKeeper<T>::getArray2D() {
     return array;
 }
 
-
 template <typename A, typename B>
-struct pair {
+struct pair { // nuff said
 public:
     A a;
     B b;
