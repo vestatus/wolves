@@ -48,9 +48,9 @@ uninstall:
 ./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./obj/logger.o ./obj/world.o ./obj/containers.o ./obj/algorythms.o ./obj/animals.o
 		g++ -c -o ./obj/graphics.o ./src/graphics/graphics.cpp --std=c++11 -O2
 
-./obj/main.o: ./src/./main.cpp ./inc/./main.hpp ./obj/logger.o ./obj/containers.o ./obj/graphics.o ./obj/wolves.o ./obj/animals.o
+./obj/main.o: ./src/./main.cpp ./inc/./main.hpp ./obj/logger.o ./obj/containers.o ./obj/graphics.o ./obj/animals.o
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/random.o ./obj/worldgen.o ./obj/wolves.o ./obj/world.o ./obj/algorythms.o ./obj/ai.o ./obj/containers.o ./obj/animals.o ./obj/main.o ./obj/graphics.o ./obj/logger.o
-		g++ ./obj/random.o ./obj/worldgen.o ./obj/wolves.o ./obj/world.o ./obj/algorythms.o ./obj/ai.o ./obj/containers.o ./obj/animals.o ./obj/main.o ./obj/graphics.o ./obj/logger.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/animals.o ./obj/graphics.o ./obj/main.o ./obj/world.o ./obj/worldgen.o ./obj/algorythms.o ./obj/containers.o ./obj/ai.o ./obj/random.o ./obj/logger.o
+		g++ ./obj/animals.o ./obj/graphics.o ./obj/main.o ./obj/world.o ./obj/worldgen.o ./obj/algorythms.o ./obj/containers.o ./obj/ai.o ./obj/random.o ./obj/logger.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system

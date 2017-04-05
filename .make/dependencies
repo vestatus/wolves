@@ -7,4 +7,4 @@ models/animals: models/world tools/containers tools/random models/ai
 tools/containers:
 tools/algorythms:
 graphics/graphics: logger/logger models/world tools/containers tools/algorythms models/animals
-./main: logger/logger tools/containers graphics/graphics models/wolves models/animals
+./main: logger/logger tools/containers graphics/graphics models/animals
