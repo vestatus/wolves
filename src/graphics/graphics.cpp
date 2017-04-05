@@ -86,8 +86,11 @@ void SFMLManager::drawWorld(World &world) {
     }
 
     int x, y;
+    int cnt = 0;
 
-    for (list<Hare*>::iterator it=Hare::startOfHares(); it != Hare::endOfHares(); it++) {
+    for (auto it=Animal::begin(); it != Animal::end(); it++) {
+        cnt++;
+
         X = (*it)->getX();
         Y = (*it)->getY();
 
@@ -106,6 +109,8 @@ void SFMLManager::drawWorld(World &world) {
             }
 
     }
+
+    //std::cout << "drew " << cnt << " animals\n";
 
 
     worldImage.update(pixels);

@@ -1,6 +1,6 @@
 #include "../inc/graphics/graphics.hpp"
 #include "../inc/models/world.hpp"
-#include "../inc/models/hares.hpp"
+#include "../inc/models/animals.hpp"
 #include <iostream>
 #include <cstdio>
 
@@ -12,7 +12,8 @@ int main()
     World world;
     world.generate();
     world.spawnGrass();
-    Hare::spawnHares(&world);
+
+    Animal::spawnAnimals(&world);
     
     manager.drawWorld(world);
 
@@ -21,10 +22,8 @@ int main()
     {
         // handle events
         if (!manager.checkCloseEvent()) {
-
-        
-
-            Hare::takeTurns(&world);
+            
+            Animal::takeTurns();
 
 
             world.tick();

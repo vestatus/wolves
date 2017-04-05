@@ -2,9 +2,9 @@ logger/logger:
 tools/random:
 tools/worldgen: logger/logger tools/random
 models/world: tools/worldgen tools/containers
-models/hares:
-models/wolves:
+models/ai: models/world
+models/animals: models/world tools/containers tools/random models/ai
 tools/containers:
 tools/algorythms:
-graphics/graphics: logger/logger models/world tools/containers tools/algorythms
-./main: logger/logger tools/containers graphics/graphics models/hares models/wolves
+graphics/graphics: logger/logger models/world tools/containers tools/algorythms models/animals
+./main: logger/logger tools/containers graphics/graphics models/wolves models/animals

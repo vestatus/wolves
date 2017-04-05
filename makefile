@@ -33,11 +33,11 @@ uninstall:
 ./obj/world.o: ./src/models/world.cpp ./inc/models/world.hpp ./obj/worldgen.o ./obj/containers.o
 		g++ -c -o ./obj/world.o ./src/models/world.cpp --std=c++11 -O2
 
-./obj/hares.o: ./src/models/hares.cpp ./inc/models/hares.hpp
-		g++ -c -o ./obj/hares.o ./src/models/hares.cpp --std=c++11 -O2
+./obj/ai.o: ./src/models/ai.cpp ./inc/models/ai.hpp ./obj/world.o
+		g++ -c -o ./obj/ai.o ./src/models/ai.cpp --std=c++11 -O2
 
-./obj/wolves.o: ./src/models/wolves.cpp ./inc/models/wolves.hpp
-		g++ -c -o ./obj/wolves.o ./src/models/wolves.cpp --std=c++11 -O2
+./obj/animals.o: ./src/models/animals.cpp ./inc/models/animals.hpp ./obj/world.o ./obj/containers.o ./obj/random.o ./obj/ai.o
+		g++ -c -o ./obj/animals.o ./src/models/animals.cpp --std=c++11 -O2
 
 ./obj/containers.o: ./src/tools/containers.cpp ./inc/tools/containers.hpp
 		g++ -c -o ./obj/containers.o ./src/tools/containers.cpp --std=c++11 -O2
@@ -45,12 +45,12 @@ uninstall:
 ./obj/algorythms.o: ./src/tools/algorythms.cpp ./inc/tools/algorythms.hpp
 		g++ -c -o ./obj/algorythms.o ./src/tools/algorythms.cpp --std=c++11 -O2
 
-./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./obj/logger.o ./obj/world.o ./obj/containers.o ./obj/algorythms.o
+./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./obj/logger.o ./obj/world.o ./obj/containers.o ./obj/algorythms.o ./obj/animals.o
 		g++ -c -o ./obj/graphics.o ./src/graphics/graphics.cpp --std=c++11 -O2
 
-./obj/main.o: ./src/./main.cpp ./inc/./main.hpp ./obj/logger.o ./obj/containers.o ./obj/graphics.o ./obj/hares.o ./obj/wolves.o
+./obj/main.o: ./src/./main.cpp ./inc/./main.hpp ./obj/logger.o ./obj/containers.o ./obj/graphics.o ./obj/wolves.o ./obj/animals.o
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/hares.o ./obj/random.o ./obj/logger.o ./obj/graphics.o ./obj/containers.o ./obj/main.o ./obj/wolves.o ./obj/world.o ./obj/algorythms.o ./obj/worldgen.o
-		g++ ./obj/hares.o ./obj/random.o ./obj/logger.o ./obj/graphics.o ./obj/containers.o ./obj/main.o ./obj/wolves.o ./obj/world.o ./obj/algorythms.o ./obj/worldgen.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/random.o ./obj/worldgen.o ./obj/wolves.o ./obj/world.o ./obj/algorythms.o ./obj/ai.o ./obj/containers.o ./obj/animals.o ./obj/main.o ./obj/graphics.o ./obj/logger.o
+		g++ ./obj/random.o ./obj/worldgen.o ./obj/wolves.o ./obj/world.o ./obj/algorythms.o ./obj/ai.o ./obj/containers.o ./obj/animals.o ./obj/main.o ./obj/graphics.o ./obj/logger.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
