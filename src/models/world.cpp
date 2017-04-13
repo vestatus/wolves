@@ -3,7 +3,6 @@
 #define max(x, y) ((x) > (y) ? (x) : (y))
 
 
-
 int World::SEA_LEVEL=0;
 
 World::World() {

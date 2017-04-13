@@ -2,11 +2,12 @@
 
 list<Animal*> Animal::animals;
 
-Animal::Animal(World* world, BaseAI* ai, pair<int, int> coords) {
+Animal::Animal(World* world, BaseAI* ai, pair<int, int> coords, type) {
     this->world = world;
     this->ai = ai;
     x = coords.a;
     y = coords.b;
+    type = animalType;
 }
 
 float Animal::getX() {return x;}
@@ -81,6 +82,9 @@ void Animal::removeDead() {
     animals = upd;
 }
 
+int Animal::getType() {
+    return Animal::animalType;
+}
 
 void Animal::spawnAnimals(World* world) {
     const int N = 50;
@@ -94,10 +98,10 @@ void Animal::spawnAnimals(World* world) {
 
     for (int i=0; i < N; i++) {
         coords = world->getRandomLand();
-        animals.push_back(new Animal(world, hareAI, coords));
+        animals.push_back(new Animal(world, hareAI, coords,0));
 
         coords = world->getRandomLand();
-        animals.push_back(new Animal(world, wolfAI, coords));
+        animals.push_back(new Animal(world, wolfAI, coords,1));
     }
 }
 

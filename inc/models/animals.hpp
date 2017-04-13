@@ -19,6 +19,7 @@ private:
     BaseAI* ai=nullptr;
     World* world;
     float x, y;
+	int animalType;
     int hunger=0;
     bool alive=true;
 public:
@@ -26,7 +27,7 @@ public:
 	static const int hungerRate = 10; // how many hunger points the hare gains per turn
 
     Animal(World* world, BaseAI* ai, pair<int, int> coords);
-
+    int getType();
     float getX();
     float getY();
     int getHunger();
