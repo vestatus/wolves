@@ -2,12 +2,12 @@
 
 list<Animal*> Animal::animals;
 
-Animal::Animal(World* world, BaseAI* ai, pair<int, int> coords, type) {
+Animal::Animal(World* world, BaseAI* ai, pair<int, int> coords, AnimalType type) {
     this->world = world;
     this->ai = ai;
+    this->type = type;
     x = coords.a;
     y = coords.b;
-    type = animalType;
 }
 
 float Animal::getX() {return x;}
@@ -83,7 +83,7 @@ void Animal::removeDead() {
 }
 
 int Animal::getType() {
-    return Animal::animalType;
+    return type;
 }
 
 void Animal::spawnAnimals(World* world) {
@@ -98,10 +98,10 @@ void Animal::spawnAnimals(World* world) {
 
     for (int i=0; i < N; i++) {
         coords = world->getRandomLand();
-        animals.push_back(new Animal(world, hareAI, coords,0));
+        animals.push_back(new Animal(world, hareAI, coords, AnimalType::HARE));
 
         coords = world->getRandomLand();
-        animals.push_back(new Animal(world, wolfAI, coords,1));
+        animals.push_back(new Animal(world, wolfAI, coords, AnimalType::WOLF));
     }
 }
 

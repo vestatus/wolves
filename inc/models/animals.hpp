@@ -10,7 +10,10 @@ using std::list;
 #define min(x, y) ((x) < (y) ? (x) : (y))
 #define max(x, y) ((x) > (y) ? (x) : (y))
 
-
+enum AnimalType {
+    HARE,
+    WOLF
+};
 
 class Animal {
 private:
@@ -19,14 +22,14 @@ private:
     BaseAI* ai=nullptr;
     World* world;
     float x, y;
-	int animalType;
+	AnimalType type;
     int hunger=0;
     bool alive=true;
 public:
 	static const int maxHunger = 1000;
 	static const int hungerRate = 10; // how many hunger points the hare gains per turn
 
-    Animal(World* world, BaseAI* ai, pair<int, int> coords);
+    Animal(World* world, BaseAI* ai, pair<int, int> coords, AnimalType type);
     int getType();
     float getX();
     float getY();

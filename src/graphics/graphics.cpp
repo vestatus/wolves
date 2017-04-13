@@ -97,14 +97,17 @@ void SFMLManager::drawWorld(World &world) {
         x = X * width / world.width;
         y =  Y * height / world.height;
 
-        const int r = 5;
+        const int r = 4;
 
         int hung = (*it)->getHunger() * 255 / (*it)->maxHunger;
 
         for ( int i = -r; i < r + 1; i++ ) 
             for ( int j = -r; j < r + 1; j++ ) {
-                if ( (i * i + j * j) <= r * 2) {
+                if ( (i * i + j * j) <= r * r) {
                     RGB(pixels, x + i, y + j, hung, 255 - hung, 0);
+                }
+                if (( (i * i + j * j) <= r * r / 4) && ((*it)->getType() == AnimalType::WOLF)) {
+                    RGB(pixels, x + i, y + j, 255, 0 , 0);
                 }
             }
 
