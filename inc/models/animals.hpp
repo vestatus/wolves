@@ -25,6 +25,7 @@ private:
 	AnimalType type;
     int hunger=0;
     bool alive=true;
+    int getFieldOfView();
 public:
 	static const int maxHunger = 1000;
 	static const int hungerRate = 10; // how many hunger points the hare gains per turn
@@ -41,6 +42,8 @@ public:
     void die();
     void eat();
 	void takeTurn();
+    vector<float> encode();
+    // static Animal decode(vector<int> animal);
     static void takeTurns();
     static void spawnAnimals(World* world);
     static void removeDead();
