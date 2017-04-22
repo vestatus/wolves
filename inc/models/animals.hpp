@@ -41,6 +41,8 @@ public:
     void die();
     void eat();
 	void takeTurn();
+    vector<float> encode();
+    // static Animal decode(vector<int> animal);
     static void takeTurns();
     static void spawnAnimals(World* world);
     static void removeDead();

@@ -23,6 +23,19 @@ float Animal::getSpeed() {
     return res;
 }
 
+vector<float> Animal::encode() {
+    // Формат вектора:
+    // 0 и 1 элементы -- координаты x и y
+    // 2 элемент -- тип животного (1 у волка и 0 у зайца)
+
+    vector<float> res;
+    res.push_back(getX());
+    res.push_back(getY());
+    res.push_back((type == AnimalType::WOLF) ? 1 : 0);
+
+    return res;
+}
+
 void Animal::die() {
     cout << animals.size() << " little niggers left\n";
     alive = false;
@@ -50,7 +63,7 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
 
     //std::cout << hunger << "\n";
 
-    auto vec = ai->decideWhereToGo();
+    auto vec = ai->decideWhereToGo(vector<vector<float>>{this->encode()});
 
     //std::cout << (int)vec.a << " " << (int)vec.b << "\n";
 
