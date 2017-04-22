@@ -1,4 +1,5 @@
 #include "../../inc/models/animals.hpp"
+#define square(x) ((x) * (x))
 
 list<Animal*> Animal::animals;
 
@@ -63,12 +64,24 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
 
     //std::cout << hunger << "\n";
 
-    auto vec = ai->decideWhereToGo(vector<vector<float>>{this->encode()});
+    vector<vector<float>> nbrs = vector<vector<float>>{this->encode()};
+    for(auto it=begin(); it != end(); it++) {
+        if (square((*it)->getX() - x) + square((*it)->getY() - y) < square(getFieldOfView()) &&
+           (*it) != this) {
+            nbrs.push_back((*it)->encode());
+        }
+    }
+
+    auto vec = ai->decideWhereToGo(nbrs);
 
     //std::cout << (int)vec.a << " " << (int)vec.b << "\n";
 
     x += vec.a * getSpeed();
     y += vec.b * getSpeed();
+}
+
+int Animal::getFieldOfView() {
+    return 50;
 }
 
 void Animal::takeTurns() {
