@@ -1,6 +1,6 @@
-#include "../../inc/models/animals.hpp"
-#include "../models/ai.cpp"
-#include "../models/eating.cpp"
+#include "../../../inc/models/animals/animals.hpp"
+#include "ai/ai.cpp"
+#include "eating.cpp"
 #define square(x) ((x) * (x))
 
 list<Animal*> Animal::animals;

@@ -1,6 +1,6 @@
 #include "../inc/graphics/graphics.hpp"
 #include "../inc/models/world.hpp"
-#include "../inc/models/animals.hpp"
+#include "../inc/models/animals/animals.hpp"
 #include <iostream>
 #include <cstdio>
 

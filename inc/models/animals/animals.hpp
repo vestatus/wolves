@@ -1,7 +1,7 @@
 #pragma once
-#include "../models/world.hpp"
-#include "../tools/containers.hpp"
-#include "../tools/random.hpp"
+#include "../world.hpp"
+#include "../../tools/containers.hpp"
+#include "../../tools/random.hpp"
 
 using std::cout;
 using std::list;

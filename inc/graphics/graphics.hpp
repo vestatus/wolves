@@ -5,7 +5,7 @@
 #include "../tools/containers.hpp"
 #include "../tools/algorythms.hpp"
 #include "../logger/logger.hpp"
-#include "../models/animals.hpp"
+#include "../models/animals/animals.hpp"
 
 
 class SFMLManager{ // This class encapsulates SFML
