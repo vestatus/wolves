@@ -40,9 +40,17 @@ for line in lines:
     obj += "./obj/{0}.o: ./src/{1}/{2}.cpp ./inc/{1}/{2}.hpp".format(
         name, folder, name)
     for other in [file for file in others.split(" ") if file.strip() != ""]:
+        noheader = other.startswith("[")
+        if noheader:
+            other = other[1:-1]
+            print(other)
+
         ofolder, oname = other.split("/")
-        obj += " ./obj/{}.o".format(oname)
-        files.add(oname)
+
+        if noheader: obj += " ./src/{}.cpp".format(other)
+        else: obj += " ./obj/{}.o".format(oname)
+        
+        if not noheader:files.add(oname)
 
     obj += "\n\t\tg++ -c -o ./obj/{0}.o ./src/{1}/{0}.cpp --std=c++11 -O2".format(
         name, folder)

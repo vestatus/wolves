@@ -7,6 +7,6 @@ void Animal::eat() {
 	        }
 	    }
 	} else if (type == AnimalType::WOLF) {
-		
+
 	}
 }

@@ -24,6 +24,7 @@ private:
     int hunger=0;
     bool alive=true;
     int getFieldOfView();
+    Vector2DRandom vectorRandom;
 public:
 	static const int maxHunger = 1000;
 	static const int hungerRate = 10; // how many hunger points the hare gains per turn
@@ -33,7 +34,6 @@ public:
     float getX();
     float getY();
     int getHunger();
-    Vector2DRandom vectorRandom;
     ~Animal();
 
     float getSpeed();

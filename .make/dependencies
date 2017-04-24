@@ -2,8 +2,7 @@ logger/logger:
 tools/random:
 tools/worldgen: logger/logger tools/random
 models/world: tools/worldgen tools/containers
-models/ai: models/world
-models/animals: models/world tools/containers tools/random models/ai
+models/animals: models/world tools/containers tools/random [models/eating] [models/ai]
 tools/containers:
 tools/algorythms:
 graphics/graphics: logger/logger models/world tools/containers tools/algorythms models/animals
