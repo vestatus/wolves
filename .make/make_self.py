@@ -32,9 +32,13 @@ uninstall:
 obj = ""
 files = set()
 
+def folder_name_split(folder_plus_name):
+    words = folder_plus_name.split("/")
+    return ("/".join(words[:-1]), words[-1])
+
 for line in lines:
     main, others = [i.strip() for i in line.split(":")]
-    folder, name = main.split("/")
+    folder, name = folder_name_split(main)
     files.add(name)
 
     obj += "./obj/{0}.o: ./src/{1}/{2}.cpp ./inc/{1}/{2}.hpp".format(
@@ -45,7 +49,7 @@ for line in lines:
             other = other[1:-1]
             print(other)
 
-        ofolder, oname = other.split("/")
+        ofolder, oname = folder_name_split(other)
 
         if noheader: obj += " ./src/{}.cpp".format(other)
         else: obj += " ./obj/{}.o".format(oname)
