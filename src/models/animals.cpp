@@ -1,5 +1,6 @@
 #include "../../inc/models/animals.hpp"
 #include "../models/ai.cpp"
+#include "../models/eating.cpp"
 #define square(x) ((x) * (x))
 
 list<Animal*> Animal::animals;
@@ -33,14 +34,7 @@ bool Animal::isAlive() {
     return alive;
 }
 
-void Animal::eat() {
-    if (world->isLandAt(x, y)) {
 
-        if (hunger > 0) {
-            hunger = max(0, hunger - world->cutGrass(x, y, 2, hunger));
-        }
-    }
-}
 
 void Animal::takeTurn() { // decide where to go, become hungry, die etc.
     hunger += hungerRate;
