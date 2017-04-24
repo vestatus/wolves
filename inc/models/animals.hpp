@@ -2,7 +2,6 @@
 #include "../models/world.hpp"
 #include "../tools/containers.hpp"
 #include "../tools/random.hpp"
-#include "../models/ai.hpp"
 
 using std::cout;
 using std::list;
@@ -19,7 +18,6 @@ class Animal {
 private:
     static list<Animal*> animals;
 
-    BaseAI* ai=nullptr;
     World* world;
     float x, y;
 	AnimalType type;
@@ -30,11 +28,12 @@ public:
 	static const int maxHunger = 1000;
 	static const int hungerRate = 10; // how many hunger points the hare gains per turn
 
-    Animal(World* world, BaseAI* ai, pair<int, int> coords, AnimalType type);
+    Animal(World* world, pair<int, int> coords, AnimalType type);
     int getType();
     float getX();
     float getY();
     int getHunger();
+    Vector2DRandom vectorRandom;
     ~Animal();
 
     float getSpeed();
@@ -42,12 +41,10 @@ public:
     void die();
     void eat();
 	void takeTurn();
-    vector<float> encode();
-    // static Animal decode(vector<int> animal);
+    pair<float, float> decideWhereToGo();
     static void takeTurns();
     static void spawnAnimals(World* world);
     static void removeDead();
     static list<Animal*>::iterator begin();
     static list<Animal*>::iterator end();
 };
-

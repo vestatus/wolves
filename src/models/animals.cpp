@@ -1,11 +1,11 @@
 #include "../../inc/models/animals.hpp"
+#include "../models/ai.cpp"
 #define square(x) ((x) * (x))
 
 list<Animal*> Animal::animals;
 
-Animal::Animal(World* world, BaseAI* ai, pair<int, int> coords, AnimalType type) {
+Animal::Animal(World* world, pair<int, int> coords, AnimalType type) {
     this->world = world;
-    this->ai = ai;
     this->type = type;
     x = coords.a;
     y = coords.b;
@@ -21,19 +21,6 @@ float Animal::getSpeed() {
     if (! world->isLandAt(round(x), round(y))) {
         res /= 5;
     }
-    return res;
-}
-
-vector<float> Animal::encode() {
-    // Формат вектора:
-    // 0 и 1 элементы -- координаты x и y
-    // 2 элемент -- тип животного (1 у волка и 0 у зайца)
-
-    vector<float> res;
-    res.push_back(getX());
-    res.push_back(getY());
-    res.push_back((type == AnimalType::WOLF) ? 1 : 0);
-
     return res;
 }
 
@@ -64,15 +51,7 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
 
     //std::cout << hunger << "\n";
 
-    vector<vector<float>> nbrs = vector<vector<float>>{this->encode()};
-    for(auto it=begin(); it != end(); it++) {
-        if (square((*it)->getX() - x) + square((*it)->getY() - y) < square(getFieldOfView()) &&
-           (*it) != this) {
-            nbrs.push_back((*it)->encode());
-        }
-    }
-
-    auto vec = ai->decideWhereToGo(nbrs);
+    auto vec = decideWhereToGo();
 
     //std::cout << (int)vec.a << " " << (int)vec.b << "\n";
 
@@ -117,17 +96,14 @@ void Animal::spawnAnimals(World* world) {
 
     animals = list<Animal*>();
 
-    HareAI* hareAI = new HareAI(world);
-    WolfAI* wolfAI = new WolfAI(world);  // memleak
-
     pair<int, int> coords;
 
     for (int i=0; i < N; i++) {
         coords = world->getRandomLand();
-        animals.push_back(new Animal(world, hareAI, coords, AnimalType::HARE));
+        animals.push_back(new Animal(world, coords, AnimalType::HARE));
 
         coords = world->getRandomLand();
-        animals.push_back(new Animal(world, wolfAI, coords, AnimalType::WOLF));
+        animals.push_back(new Animal(world, coords, AnimalType::WOLF));
     }
 }
 
