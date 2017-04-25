@@ -49,5 +49,5 @@ uninstall:
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/algorythms.o ./obj/main.o ./obj/random.o ./obj/graphics.o ./obj/animals.o ./obj/logger.o ./obj/containers.o ./obj/world.o ./obj/worldgen.o
-		g++ ./obj/algorythms.o ./obj/main.o ./obj/random.o ./obj/graphics.o ./obj/animals.o ./obj/logger.o ./obj/containers.o ./obj/world.o ./obj/worldgen.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/world.o ./obj/worldgen.o ./obj/main.o ./obj/logger.o ./obj/animals.o ./obj/containers.o ./obj/random.o ./obj/algorythms.o ./obj/graphics.o
+		g++ ./obj/world.o ./obj/worldgen.o ./obj/main.o ./obj/logger.o ./obj/animals.o ./obj/containers.o ./obj/random.o ./obj/algorythms.o ./obj/graphics.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system

@@ -37,9 +37,7 @@ bool Animal::isAlive() {
 
 
 void Animal::takeTurn() { // decide where to go, become hungry, die etc.
-    hunger += hungerRate;
-    if (hunger > maxHunger) die();
-
+    increaseHunger(hungerRate);
 
     eat();
 
@@ -108,4 +106,13 @@ list<Animal*>::iterator Animal::begin() {
 
 list<Animal*>::iterator Animal::end() {
     return animals.end();
+}
+
+void Animal::decreaseHunger(int delta) {
+    hunger = ((hunger - delta) < 0) ? : (hunger - delta);
+}
+
+void Animal::increaseHunger(int delta) {
+    hunger += delta;
+    if (hunger > maxHunger) die();
 }
