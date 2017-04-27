@@ -88,6 +88,10 @@ int Animal::getType() {
 void Animal::spawnAnimals(World* world) {
     const int N = 50;
 
+    for(auto it=animals.begin(); it != animals.end(); it++) {
+        delete *it;
+    }
+
     animals = list<Animal*>();
 
     pair<int, int> coords;
