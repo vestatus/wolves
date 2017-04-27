@@ -53,10 +53,13 @@ void SFMLManager::drawWorld(World &world) {
     logger.log("drawing world", "INFO");
     sf::Texture worldImage;
 
+
     worldImage.create(width, height);
 
     ArrayKeeper<sf::Uint8> pxArray(width * height * 4); // encapsulates the array and automatically deletes at the end of function
     sf::Uint8* pixels = pxArray.getArray();
+
+    
 
     bool isLand;
     int grass, ht, X, Y;
@@ -114,15 +117,52 @@ void SFMLManager::drawWorld(World &world) {
     }
 
     //std::cout << "drew " << cnt << " animals\n";
-
+    
+    Button button = Button(100, 100, 80, 20, "Click me!");
+    drawButtonBackground(button, pixels);
 
     worldImage.update(pixels);
 
     sf::Sprite sprite;
     sprite.setTexture(worldImage);
 
-    window.clear();
+    //window.clear();
     window.draw(sprite);
 
+    drawButtonText(button);
+    
+
     logger.log("world drawn", "SUCC");
+}
+
+void SFMLManager::drawButtonText(Button& button) {
+    drawCenteredText(button.text, button.x + button.w / 2, button.y, 14, sf::Color::Black);
+}
+
+void SFMLManager::drawButtonBackground(Button& button, sf::Uint8* pixels) {
+    for (int i=button.x; i < button.x + button.w; i++) {
+        for(int j=button.y; j < button.y + button.h; j++) {
+            RGB(pixels, i, j, 250, 250, 250);
+            if ((i - button.x) * (j - button.y) * (i - button.x - button.w + 1) * (j - button.y - button.h + 1) == 0)
+                RGB(pixels, i, j, 0, 0, 0);
+        }
+    }
+}
+
+void SFMLManager::drawCenteredText(string textString, int x, int y, int size, sf::Color color) {
+    sf::Text text;
+    sf::Font font;
+    font.loadFromFile("res/Inconsolata.otf");
+
+    text.setFont(font);
+    text.setString(textString);
+
+    float width = text.getLocalBounds().width;
+
+    text.setPosition(x - width / 4, y);
+
+    text.setCharacterSize(size);
+    text.setColor(color);
+
+    window.draw(text);
 }

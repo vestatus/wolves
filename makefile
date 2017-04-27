@@ -27,6 +27,9 @@ uninstall:
 ./obj/random.o: ./src/tools/random.cpp ./inc/tools/random.hpp
 		g++ -c -o ./obj/random.o ./src/tools/random.cpp --std=c++11 -O2
 
+./obj/button.o: ./src/graphics/button.cpp ./inc/graphics/button.hpp
+		g++ -c -o ./obj/button.o ./src/graphics/button.cpp --std=c++11 -O2
+
 ./obj/worldgen.o: ./src/tools/worldgen.cpp ./inc/tools/worldgen.hpp ./obj/logger.o ./obj/random.o
 		g++ -c -o ./obj/worldgen.o ./src/tools/worldgen.cpp --std=c++11 -O2
 
@@ -42,12 +45,12 @@ uninstall:
 ./obj/algorythms.o: ./src/tools/algorythms.cpp ./inc/tools/algorythms.hpp
 		g++ -c -o ./obj/algorythms.o ./src/tools/algorythms.cpp --std=c++11 -O2
 
-./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./obj/logger.o ./obj/world.o ./obj/containers.o ./obj/algorythms.o ./obj/animals.o
+./obj/graphics.o: ./src/graphics/graphics.cpp ./inc/graphics/graphics.hpp ./obj/logger.o ./obj/world.o ./obj/containers.o ./obj/algorythms.o ./obj/animals.o ./obj/button.o
 		g++ -c -o ./obj/graphics.o ./src/graphics/graphics.cpp --std=c++11 -O2
 
 ./obj/main.o: ./src/./main.cpp ./inc/./main.hpp ./obj/logger.o ./obj/containers.o ./obj/graphics.o ./obj/animals.o
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/algorythms.o ./obj/main.o ./obj/random.o ./obj/graphics.o ./obj/animals.o ./obj/logger.o ./obj/containers.o ./obj/world.o ./obj/worldgen.o
-		g++ ./obj/algorythms.o ./obj/main.o ./obj/random.o ./obj/graphics.o ./obj/animals.o ./obj/logger.o ./obj/containers.o ./obj/world.o ./obj/worldgen.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/random.o ./obj/button.o ./obj/world.o ./obj/worldgen.o ./obj/logger.o ./obj/containers.o ./obj/graphics.o ./obj/main.o ./obj/algorythms.o ./obj/animals.o
+		g++ ./obj/random.o ./obj/button.o ./obj/world.o ./obj/worldgen.o ./obj/logger.o ./obj/containers.o ./obj/graphics.o ./obj/main.o ./obj/algorythms.o ./obj/animals.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
