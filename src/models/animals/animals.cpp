@@ -116,3 +116,11 @@ void Animal::increaseHunger(int delta) {
     hunger += delta;
     if (hunger > maxHunger) die();
 }
+
+bool Animal::isHare() {
+    return type == AnimalType::HARE;
+}
+
+bool Animal::isWolf() {
+    return type == AnimalType::WOLF;
+}
