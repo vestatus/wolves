@@ -14,7 +14,6 @@ void Animal::eat() {
 				if ((*it)->getType() == AnimalType::HARE) {
 					(*it)->die();
 					decreaseHunger(hareHungerValue);
-					std::cout << "a wolf has eaten a hare\n";
 				}
 			}
 		}
