@@ -9,7 +9,7 @@ int main()
 
     // create the window
     SFMLManager manager("Wolves, hares and grass");
-    Button button = Button(100, 100, 80, 20, "Click me!");
+    Button button = Button(100, 100, 80, 20, "Click me!", [cout](){cout << "clicked\n";});
     button.save();
 
 
@@ -27,11 +27,6 @@ int main()
     {
         manager.checkEvent();
         // handle events
-
-        auto events = manager.clickEventRecieved();
-        if (! events.empty()) {
-            
-        }
 
         if (!manager.checkCloseEvent()) {
             

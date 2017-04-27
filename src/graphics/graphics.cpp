@@ -212,7 +212,7 @@ bool SFMLManager::checkEvent() {
 
             for(auto it=Button::begin(); it != Button::end(); it++) {
                 if ((pos.x > its x) && (pos.x < its x + its w) && (pos.y < its y + its h) && (pos.y > its y)) {
-                    cout << its text << "\n";
+                    its activate();
                 }
             }
         }
