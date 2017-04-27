@@ -2,13 +2,13 @@
 
 list<Button> Button::buttons;
 
-Button::Button(int x, int y, int w, int h, string text, Action action) {
+Button::Button(int x, int y, int w, int h, string text, std::function<void (Button*)> action) {
 	this -> x = x;
 	this -> y = y;
 	this -> w = w;
 	this -> h = h;
 	this -> text = text;
-	activate = action;
+	this -> action = action;
 }
 
 list<Button>::iterator Button::begin() {
@@ -21,4 +21,8 @@ list<Button>::iterator Button::end() {
 
 void Button::save() {
 	buttons.push_back(*this);
+}
+
+void Button::activate() {
+	action(this);
 }

@@ -7,17 +7,16 @@
 using std::string;
 using std::list;
 
-typedef std::function<void ()> Action;
-
 class Button {
 protected:
 	static list<Button> buttons;
+	std::function<void (Button*)> action = [](Button* btn){};
 public:
 	int x, y, h, w;
 	string text;
-	Button(int x, int y, int w, int h, string text, Action action);
-	Action activate = [](){};
+	Button(int x, int y, int w, int h, string text, std::function<void (Button*)> action);
 	void save();
+	void activate();
 	static list<Button>::iterator begin();
 	static list<Button>::iterator end();
 };

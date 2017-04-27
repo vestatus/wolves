@@ -139,7 +139,7 @@ void SFMLManager::drawWorld(World &world) {
 }
 
 void SFMLManager::drawButtonText(Button& button) {
-    drawCenteredText(button.text, button.x + button.w / 2, button.y, 14, sf::Color::Black);
+    drawCenteredText(button.text, button.x + button.w / 2, button.y + button.h / 4, 14, sf::Color::Black);
 }
 
 void SFMLManager::drawButtonBackground(Button& button, sf::Uint8* pixels) {
