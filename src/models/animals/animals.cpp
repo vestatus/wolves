@@ -26,7 +26,7 @@ float Animal::getSpeed() {
 }
 
 void Animal::die() {
-    cout << animals.size() << " little niggers left\n";
+    // cout << animals.size() << " little niggers left\n";
     alive = false;
 }
 

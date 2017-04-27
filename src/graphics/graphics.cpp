@@ -205,10 +205,10 @@ bool SFMLManager::checkEvent() {
             clickEvents.push(event); 
             res = true;
 
-            //cout << event.type.x << " " << event.type.y << "\n"
+            // cout << event.type.x << " " << event.type.y << "\n"
             sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
-            cout << "click at (" << pos.x << ";" << pos.y << ")\n";
+            // cout << "click at (" << pos.x << ";" << pos.y << ")\n";
 
             for(auto it=Button::begin(); it != Button::end(); it++) {
                 if ((pos.x > its x) && (pos.x < its x + its w) && (pos.y < its y + its h) && (pos.y > its y)) {
