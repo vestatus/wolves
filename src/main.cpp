@@ -9,6 +9,11 @@ int main()
 
     // create the window
     SFMLManager manager("Wolves, hares and grass");
+    Button button = Button(100, 100, 80, 20, "Click me!");
+    button.save();
+
+
+
     World world;
     world.generate();
     world.spawnGrass();
@@ -20,7 +25,14 @@ int main()
     // run the main loop
     while (manager.windowIsOpen())
     {
+        manager.checkEvent();
         // handle events
+
+        auto events = manager.clickEventRecieved();
+        if (! events.empty()) {
+            
+        }
+
         if (!manager.checkCloseEvent()) {
             
             Animal::takeTurns();

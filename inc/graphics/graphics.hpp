@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <queue>
 #include "../models/world.hpp"
 #include "../tools/containers.hpp"
 #include "../tools/algorythms.hpp"
@@ -8,11 +9,14 @@
 #include "../models/animals/animals.hpp"
 #include "../graphics/button.hpp"
 
+using std::queue;
 
 class SFMLManager{ // This class encapsulates SFML
 private:
     sf::RenderWindow window;
     BufferedLogger logger;
+    queue<sf::Event> closeEvents;
+    queue<sf::Event> clickEvents;
     void drawButtonBackground(Button& button, sf::Uint8* pixels);
     void drawButtonText(Button& button);
     static void RGB(sf::Uint8* pixels, int x, int y, int r, int g, int b); // draw a dot into SFML buffer
@@ -24,7 +28,10 @@ public:
     static const bool SMOOTH_LANDSCAPE = false;
 
     SFMLManager(std::string title);
+    bool checkEvent();
     bool checkCloseEvent(); // close the window if the user says so
+    queue<sf::Event> clickEventRecieved();
+    queue<sf::Event> closeEventRecieved();
     bool windowIsOpen();
     void render(); // draw the SFML buffer to the screen
     void drawCenteredText(string textString, int x, int y, int size, sf::Color color);

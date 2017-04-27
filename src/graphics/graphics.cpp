@@ -1,4 +1,5 @@
 #include "../../inc/graphics/graphics.hpp"
+#define its (*it).
 
 SFMLManager::SFMLManager(std::string title) {
     window.create(sf::VideoMode(width, height), title);
@@ -15,15 +16,13 @@ bool SFMLManager::windowIsOpen() {
 
 bool SFMLManager::checkCloseEvent() {
     logger.log("checking for a close event", "INFO");
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-        if(event.type == sf::Event::Closed) {
-            logger.log("window close requested by user, closing window", "INFO");
-            window.close();
-            logger.log("window closed", "SUCC");
-            return true;
-        }
+    
+    queue<sf::Event> e = closeEventRecieved();
+    if (! e.empty()) {
+        logger.log("window close requested by user, closing window", "INFO");
+        window.close();
+        logger.log("window closed", "SUCC");
+        return true;
     }
     return false;
 }
@@ -118,8 +117,10 @@ void SFMLManager::drawWorld(World &world) {
 
     //std::cout << "drew " << cnt << " animals\n";
     
-    Button button = Button(100, 100, 80, 20, "Click me!");
-    drawButtonBackground(button, pixels);
+
+    for(auto it=Button::begin(); it != Button::end(); it++) {
+        drawButtonBackground(*it, pixels);
+    }
 
     worldImage.update(pixels);
 
@@ -129,7 +130,9 @@ void SFMLManager::drawWorld(World &world) {
     //window.clear();
     window.draw(sprite);
 
-    drawButtonText(button);
+    for(auto it=Button::begin(); it != Button::end(); it++) {
+        drawButtonText(*it);
+    }
     
 
     logger.log("world drawn", "SUCC");
@@ -165,4 +168,54 @@ void SFMLManager::drawCenteredText(string textString, int x, int y, int size, sf
     text.setColor(color);
 
     window.draw(text);
+}
+
+queue<sf::Event> SFMLManager::clickEventRecieved() {
+    queue<sf::Event> e;
+
+    if (!clickEvents.empty()) {
+        e = clickEvents;
+        clickEvents = queue<sf::Event>();
+    }
+
+    return e;
+}
+
+queue<sf::Event> SFMLManager::closeEventRecieved() {
+    queue<sf::Event> e;
+
+    if (!closeEvents.empty()) {
+        e = closeEvents;
+        closeEvents = queue<sf::Event>();
+    }
+
+    return e;
+}
+
+bool SFMLManager::checkEvent() {
+    sf::Event event;
+    bool res = false;
+    while (window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed) {
+            closeEvents.push(event); 
+            res = true;
+        }
+        else if (event.type == sf::Event::MouseButtonPressed) {
+            clickEvents.push(event); 
+            res = true;
+
+            //cout << event.type.x << " " << event.type.y << "\n"
+            sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+
+            cout << "click at (" << pos.x << ";" << pos.y << ")\n";
+
+            for(auto it=Button::begin(); it != Button::end(); it++) {
+                if ((pos.x > its x) && (pos.x < its x + its w) && (pos.y < its y + its h) && (pos.y > its y)) {
+                    cout << its text << "\n";
+                }
+            }
+        }
+    }
+    return res;
 }
