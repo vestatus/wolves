@@ -27,4 +27,5 @@ class Vector2DRandom {
 public:
 	pair<float, float> next();
 	Vector2DRandom();
+	~Vector2DRandom();
 };
