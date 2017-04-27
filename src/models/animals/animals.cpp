@@ -26,7 +26,7 @@ float Animal::getSpeed() {
 }
 
 void Animal::die() {
-    cout << animals.size() << " little niggers left\n";
+    // cout << animals.size() << " little niggers left\n";
     alive = false;
 }
 
@@ -85,6 +85,10 @@ int Animal::getType() {
 
 void Animal::spawnAnimals(World* world) {
     const int N = 50;
+
+    for(auto it=animals.begin(); it != animals.end(); it++) {
+        delete *it;
+    }
 
     animals = list<Animal*>();
 
