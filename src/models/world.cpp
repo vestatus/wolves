@@ -5,6 +5,8 @@
 
 int World::SEA_LEVEL=0;
 
+BufferedLogger worldLogger = BufferedLogger("world");
+
 World::World() {
     const int radius = 200;
     const int c_x=500, c_y=500;
@@ -13,8 +15,7 @@ World::World() {
 
     grass = std::vector<std::vector<int>>(width, std::vector<int>(height, 0));
 
-    logger = BufferedLogger("world");
-    logger.log("world created", "SUCC");    
+    worldLogger.log("world created", "SUCC");    
 }
 
 void World::generate() {
@@ -59,11 +60,11 @@ int World::getGrassAt(int x, int y) {
 }
 
 void World::spawnGrass() {
-    logger.log("spawning grass", "INFO");
+    worldLogger.log("spawning grass", "INFO");
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {
         grass[x][y] = (isLandAt(x, y) ? (0.5 * GRASS_MAX) : 0);
     }
-    logger.log("grass spawned", "SUCC");
+    worldLogger.log("grass spawned", "SUCC");
 }
 
 
