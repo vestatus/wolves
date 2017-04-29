@@ -1,5 +1,5 @@
 #include "../../inc/tools/random.hpp"
-
+#include <iostream>
 void MyRandom::init( int minVal, int maxVal, int seed ) {
     dist = std::uniform_int_distribution<>(minVal, maxVal);
     gen = std::mt19937(rd());
@@ -20,4 +20,9 @@ Vector2DRandom::Vector2DRandom() {
 pair<float, float> Vector2DRandom::next() {
 	float rnd = random->next() * 0.01;
 	return pair<float, float>(cos(rnd), sin(rnd));
+}
+
+
+Vector2DRandom::~Vector2DRandom() {
+	delete random;
 }

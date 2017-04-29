@@ -25,9 +25,12 @@ private:
     bool alive=true;
     int getFieldOfView();
     Vector2DRandom vectorRandom;
+    void decreaseHunger(int delta);
+    void increaseHunger(int delta);
 public:
 	static const int maxHunger = 1000;
-	static const int hungerRate = 10; // how many hunger points the hare gains per turn
+	static const int hungerRate = 2; // how many hunger points the hare gains per turn
+    static const int hareHungerValue = maxHunger / 2;
 
     Animal(World* world, pair<int, int> coords, AnimalType type);
     int getType();
@@ -41,6 +44,8 @@ public:
     void die();
     void eat();
 	void takeTurn();
+    bool isHare();
+    bool isWolf();
     pair<float, float> decideWhereToGo();
     static void takeTurns();
     static void spawnAnimals(World* world);

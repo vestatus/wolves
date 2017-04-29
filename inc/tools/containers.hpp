@@ -76,4 +76,10 @@ public:
         a = _a;
         b = _b;
     }
+
+    pair<float, float> scale(float len) {
+        float length = hypot(a, b);
+        if (length == 0) return pair<float, float>(0, 0);
+        else return pair<float, float>(a * len / length, b * len / length);
+    }
 };

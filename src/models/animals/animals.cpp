@@ -26,7 +26,7 @@ float Animal::getSpeed() {
 }
 
 void Animal::die() {
-    cout << animals.size() << " little niggers left\n";
+    // cout << animals.size() << " little niggers left\n";
     alive = false;
 }
 
@@ -37,9 +37,7 @@ bool Animal::isAlive() {
 
 
 void Animal::takeTurn() { // decide where to go, become hungry, die etc.
-    hunger += hungerRate;
-    if (hunger > maxHunger) die();
-
+    increaseHunger(hungerRate);
 
     eat();
 
@@ -88,6 +86,10 @@ int Animal::getType() {
 void Animal::spawnAnimals(World* world) {
     const int N = 50;
 
+    for(auto it=animals.begin(); it != animals.end(); it++) {
+        delete *it;
+    }
+
     animals = list<Animal*>();
 
     pair<int, int> coords;
@@ -108,4 +110,21 @@ list<Animal*>::iterator Animal::begin() {
 
 list<Animal*>::iterator Animal::end() {
     return animals.end();
+}
+
+void Animal::decreaseHunger(int delta) {
+    hunger = ((hunger - delta) < 0) ? : (hunger - delta);
+}
+
+void Animal::increaseHunger(int delta) {
+    hunger += delta;
+    if (hunger > maxHunger) die();
+}
+
+bool Animal::isHare() {
+    return type == AnimalType::HARE;
+}
+
+bool Animal::isWolf() {
+    return type == AnimalType::WOLF;
 }
