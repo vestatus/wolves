@@ -1,3 +1,5 @@
+#include "../../../../inc/tools/algorythms.hpp"
+
 pair<float, float> Animal::decideWhereToGo() {
 	if (type == AnimalType::HARE) {
 		#include "hare_ai.cpp"

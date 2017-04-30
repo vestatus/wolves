@@ -1,3 +1,7 @@
+#pragma once
+#include "../tools/containers.hpp"
+#include <cmath>
+
 class HSV_to_RGB {
 public:
 
@@ -16,3 +20,5 @@ public:
 	static hsv rgb2hsv(rgb in);
 	static rgb hsv2rgb(hsv in);
 };
+
+float dist(pair<float, float> a, pair<float, float> b);

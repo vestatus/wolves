@@ -103,3 +103,7 @@ HSV_to_RGB::rgb HSV_to_RGB::hsv2rgb(hsv in)
     }
     return out;     
 }
+
+float dist(pair<float, float> a, pair<float, float> b) {
+    return hypot(a.a - b.a, a.b - b.b);
+}

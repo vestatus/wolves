@@ -20,8 +20,9 @@ Animal::~Animal() {}
 float Animal::getSpeed() {
     float res = 1 - (float)hunger / maxHunger;
     if (! world->isLandAt(round(x), round(y))) {
-        res /= 5;
+        res /= 4;
     }
+    if (type == AnimalType::WOLF) res *= 1.7;
     return res;
 }
 
@@ -43,12 +44,19 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
 
     //std::cout << hunger << "\n";
 
-    auto vec = decideWhereToGo();
+    auto vec = decideWhereToGo().scale(1);
 
     //std::cout << (int)vec.a << " " << (int)vec.b << "\n";
 
-    x += vec.a * getSpeed();
-    y += vec.b * getSpeed();
+    vx = vec.a * getSpeed();
+    vy = vec.b * getSpeed();
+
+    x += vx;
+    y += vy;
+}
+
+pair<float, float> Animal::getSpeedVector() {
+    return pair<float, float>(vx, vy);
 }
 
 int Animal::getFieldOfView() {
@@ -84,7 +92,8 @@ int Animal::getType() {
 }
 
 void Animal::spawnAnimals(World* world) {
-    const int N = 50;
+    const int N_hares = 50;
+    const int N_wolves = 5;
 
     for(auto it=animals.begin(); it != animals.end(); it++) {
         delete *it;
@@ -94,10 +103,12 @@ void Animal::spawnAnimals(World* world) {
 
     pair<int, int> coords;
 
-    for (int i=0; i < N; i++) {
+    for (int i=0; i < N_hares; i++) {
         coords = world->getRandomLand();
         animals.push_back(new Animal(world, coords, AnimalType::HARE));
+    }
 
+    for (int i=0; i < N_wolves; i++) {
         coords = world->getRandomLand();
         animals.push_back(new Animal(world, coords, AnimalType::WOLF));
     }
@@ -127,4 +138,8 @@ bool Animal::isHare() {
 
 bool Animal::isWolf() {
     return type == AnimalType::WOLF;
+}
+
+pair<float, float> Animal::getCoords() {
+    return pair<float, float>(x, y);
 }
