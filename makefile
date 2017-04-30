@@ -52,5 +52,5 @@ uninstall:
 		g++ -c -o ./obj/main.o ./src/./main.cpp --std=c++11 -O2
 
 
-$(BIN): ./obj/animals.o ./obj/containers.o ./obj/algorythms.o ./obj/main.o ./obj/worldgen.o ./obj/graphics.o ./obj/button.o ./obj/logger.o ./obj/random.o ./obj/world.o
-		g++ ./obj/animals.o ./obj/containers.o ./obj/algorythms.o ./obj/main.o ./obj/worldgen.o ./obj/graphics.o ./obj/button.o ./obj/logger.o ./obj/random.o ./obj/world.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system
+$(BIN): ./obj/worldgen.o ./obj/world.o ./obj/button.o ./obj/graphics.o ./obj/random.o ./obj/main.o ./obj/logger.o ./obj/algorythms.o ./obj/animals.o ./obj/containers.o
+		g++ ./obj/worldgen.o ./obj/world.o ./obj/button.o ./obj/graphics.o ./obj/random.o ./obj/main.o ./obj/logger.o ./obj/algorythms.o ./obj/animals.o ./obj/containers.o -o $(BIN) -lsfml-graphics -lsfml-window -lsfml-system

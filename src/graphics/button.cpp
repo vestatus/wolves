@@ -24,5 +24,6 @@ void Button::save() {
 }
 
 void Button::activate() {
+	cl -= 70;
 	action(this);
 }

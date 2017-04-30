@@ -12,6 +12,7 @@ protected:
 	static list<Button> buttons;
 	std::function<void (Button*)> action = [](Button* btn){};
 public:
+	int cl = 250;
 	int x, y, h, w;
 	string text;
 	Button(int x, int y, int w, int h, string text, std::function<void (Button*)> action);
