@@ -14,7 +14,10 @@ int main()
 
     bool simulationRunning = true;
 
-    Button button = Button(840, 0, 160, 40, "Pause", [&simulationRunning](Button* btn){
+    int btn_width = 160;
+    int btn_height = 40;
+
+    Button button = Button(manager.width - btn_width, 0, btn_width, btn_height, "Pause", [&simulationRunning](Button* btn){
         simulationRunning = ! simulationRunning;
         btn->text = simulationRunning ? "Pause" : "Start";
     });
@@ -29,7 +32,7 @@ int main()
     world.spawnGrass();
 
 
-    button = Button(840, 40, 160, 40, "Restart", [&world, &manager](Button* btn){
+    button = Button(manager.width - btn_width, btn_height, btn_width, btn_height, "Restart", [&world, &manager](Button* btn){
         world.generate(); 
         world.spawnGrass(); 
         Animal::spawnAnimals(&world); 

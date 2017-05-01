@@ -129,9 +129,6 @@ void SFMLManager::drawWorld(World &world) {
 
     }
 
-    //std::cout << "drew " << cnt << " animals\n";
-    
-
     for(auto it=Button::begin(); it != Button::end(); it++) {
         drawButtonBackground(*it, pixels);
     }
@@ -157,7 +154,7 @@ void SFMLManager::drawButtonText(Button& button) {
 }
 
 void SFMLManager::drawButtonBackground(Button& button, sf::Uint8* pixels) {
-    if (button.cl != 250) button.cl += 5;
+    if (button.cl < 250) button.cl += 5;
 
     for (int i=button.x; i < button.x + button.w; i++) {
         for(int j=button.y; j < button.y + button.h; j++) {
