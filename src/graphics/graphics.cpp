@@ -38,7 +38,7 @@ float sigmoid(float x){
     return 1/(1 + pow(2.71828, x));
 }
 
-void SFMLManager::RGB(sf::Uint8* pixels, int x, int y, int r, int g, int b) {
+void SFMLManager::RGBA(sf::Uint8* pixels, int x, int y, int r, int g, int b, int a=255) {
     if ((x < 0) || (y < 0) || (x >= width) || (y >= height)) return;
 
     int pos = (y * width + x) * 4;
@@ -46,7 +46,7 @@ void SFMLManager::RGB(sf::Uint8* pixels, int x, int y, int r, int g, int b) {
     pixels[pos] = r;
     pixels[pos + 1] = g;
     pixels[pos + 2] = b;
-    pixels[pos + 3] = 255;
+    pixels[pos + 3] = a;
 }
 
 void SFMLManager::drawWorld(World &world) {
@@ -56,41 +56,54 @@ void SFMLManager::drawWorld(World &world) {
 
     worldImage.create(width, height);
 
-    ArrayKeeper<sf::Uint8> pxArray(width * height * 4); // encapsulates the array and automatically deletes at the end of function
+    ArrayKeeper<sf::Uint8> pxArray(width * height * 4); // encapsulates the array and automatically deletes 
+                                                        // at the end of function
     sf::Uint8* pixels = pxArray.getArray();
 
     
 
     bool isLand;
     int grass, ht, X, Y;
+    int max_ht = 0;
 
+    for(int x=0;x<world.width;x++) 
+        for (int y=0;y<world.height;y++) 
+            if (max_ht < abs(world.h_map[x][y] - World::SEA_LEVEL)) 
+                max_ht = abs(world.h_map[x][y] - World::SEA_LEVEL);
+
+    // draw grass, seas etc.
     for(int x=0;x<width;x++) for (int y=0;y<height;y++) {
         X = x * world.width / width;
         Y = y * world.height / height;
 
-        ht = int(atan((world.h_map[X][Y] - World::SEA_LEVEL) / (SMOOTH_LANDSCAPE ? 100.0 : 100)) * 255 / 1.57); // scaling to fit infinity into [-256; 255]
+        // scaling to fit infinity into [-256; 255]
+        //ht = int(atan((world.h_map[X][Y] - World::SEA_LEVEL) / (SMOOTH_LANDSCAPE ? 100.0 : 100)) * 255 / 1.57); 
+        ht = (world.h_map[X][Y] - World::SEA_LEVEL) * 255 / max_ht;
 
         grass = world.getGrassAt(X, Y);
         isLand = world.isLandAt(X, Y);
 
          if (isLand) {
-            HSV_to_RGB::hsv cl_hsv;
-            cl_hsv.h = 100;
-            cl_hsv.s = 1 - (ht / 512.0);
-            cl_hsv.v = grass * 1.0 / world.GRASS_MAX;
 
-            HSV_to_RGB::rgb cl_rgb = HSV_to_RGB::hsv2rgb(cl_hsv);
-            RGB(pixels, x, y, cl_rgb.r * 255, cl_rgb.g * 255, cl_rgb.b * 255);
+            int gr = round(grass * 1.0 / world.GRASS_MAX);
+            
+            if ((ht < 10) && (ht >= 0)) {
+               RGBA(pixels, x, y, 200, 200, 100);
+            } else {
+                RGBA(pixels, x, y, (255 - ht) *3/4, 255 * 3 /4, ht / 2, grass);
+            }
+            
+        } else {
+           RGBA(pixels, x, y, (255+ht)/2, (255+ht)/2, 255 + ht / 2); // ht < 0
+        }
 
-            //RGB(pixels, x, y, 0, (DRAW_HEIGHT ? (ht / 2) : 0) + grass / 2, 0);
-         } else {
-            RGB(pixels, x, y, 0, 0, 255 + ht); // ht < 0
-         }
     }
 
     int x, y;
     int cnt = 0;
 
+
+    // draw animals
     for (auto it=Animal::begin(); it != Animal::end(); it++) {
         cnt++;
 
@@ -107,10 +120,10 @@ void SFMLManager::drawWorld(World &world) {
         for ( int i = -r; i < r + 1; i++ ) 
             for ( int j = -r; j < r + 1; j++ ) {
                 if ( (i * i + j * j) <= r * r) {
-                    RGB(pixels, x + i, y + j, hung, 255 - hung, 0);
+                    RGBA(pixels, x + i, y + j, hung, 255 - hung, 0);
                 }
                 if (( (i * i + j * j) <= r * r / 4) && ((*it)->getType() == AnimalType::WOLF)) {
-                    RGB(pixels, x + i, y + j, 255, 0 , 0);
+                    RGBA(pixels, x + i, y + j, 255, 0 , 0);
                 }
             }
 
@@ -128,7 +141,7 @@ void SFMLManager::drawWorld(World &world) {
     sf::Sprite sprite;
     sprite.setTexture(worldImage);
 
-    //window.clear();
+    window.clear();
     window.draw(sprite);
 
     for(auto it=Button::begin(); it != Button::end(); it++) {
@@ -148,9 +161,9 @@ void SFMLManager::drawButtonBackground(Button& button, sf::Uint8* pixels) {
 
     for (int i=button.x; i < button.x + button.w; i++) {
         for(int j=button.y; j < button.y + button.h; j++) {
-            RGB(pixels, i, j, button.cl, button.cl, button.cl);
+            RGBA(pixels, i, j, button.cl, button.cl, button.cl);
             if ((i - button.x) * (j - button.y - button.h + 1) == 0)
-                RGB(pixels, i, j, 0, 0, 0);
+                RGBA(pixels, i, j, 0, 0, 0);
         }
     }
 }
