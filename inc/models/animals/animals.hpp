@@ -20,6 +20,7 @@ private:
 
     World* world;
     float x, y;
+    float vx, vy;
 	AnimalType type;
     int hunger=0;
     bool alive=true;
@@ -36,6 +37,8 @@ public:
     int getType();
     float getX();
     float getY();
+    pair<float, float> getCoords();
+    pair<float, float> getSpeedVector();
     int getHunger();
     ~Animal();
 

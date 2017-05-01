@@ -5,6 +5,6 @@ tools/worldgen: logger/logger tools/random
 models/world: tools/worldgen tools/containers
 models/animals/animals: models/world tools/containers tools/random [models/animals/eating] [models/animals/ai/ai] [models/animals/ai/hare_ai] [models/animals/ai/wolf_ai]
 tools/containers:
-tools/algorythms:
+tools/algorythms: tools/containers
 graphics/graphics: logger/logger models/world tools/containers tools/algorythms models/animals/animals graphics/button
 ./main: logger/logger tools/containers graphics/graphics models/animals/animals

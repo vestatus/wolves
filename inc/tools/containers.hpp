@@ -82,4 +82,16 @@ public:
         if (length == 0) return pair<float, float>(0, 0);
         else return pair<float, float>(a * len / length, b * len / length);
     }
+
+    pair<A, B> operator + (pair<A, B> other) {
+        return pair<A, B>(a + other.a, b + other.b);
+    }
+
+    pair<A, B> operator - () {
+        return pair<A, B>(-a, -b);
+    }
+
+    float getLength() {
+        return hypot(a, b);
+    }
 };

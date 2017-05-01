@@ -1,2 +1,16 @@
-// тут не надо писать никаких функций, этот файл -- уже кусок тела функции src/models/ai.cpp/decideWhereToGo
-return vectorRandom.next();
+const int radius = 50;
+pair<float, float> sum(0, 0);
+
+for(auto it=begin(); it != end(); it++) {
+	if ((*it)->isWolf()) {
+		if (dist((*it)->getCoords(), this->getCoords()) < radius) {
+			sum = sum + (*it)->getSpeedVector();
+		}
+	}
+}
+
+if (sum.getLength() > 0.1) {
+	return sum;
+} else {
+	return vectorRandom.next();
+}
