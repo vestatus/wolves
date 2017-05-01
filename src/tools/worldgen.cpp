@@ -72,10 +72,10 @@ void WorldGenerator::diamond(int** hmap, int w) {
 }
 
 void WorldGenerator::generate(int** hmap) {
-	hmap[0][0] = 0;
-	hmap[0][size - 1] = 0;
-	hmap[size - 1][0] = 0;
-	hmap[size - 1][size - 1] = 0;
+	hmap[0][0] = -100;
+	hmap[0][size - 1] = -100;
+	hmap[size - 1][0] = -100;
+	hmap[size - 1][size - 1] = -100;
 
 	square(hmap, size - 1);
 

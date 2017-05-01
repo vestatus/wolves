@@ -5,6 +5,8 @@
 
 int World::SEA_LEVEL=0;
 
+BufferedLogger worldLogger = BufferedLogger("world");
+
 World::World() {
     const int radius = 200;
     const int c_x=500, c_y=500;
@@ -13,8 +15,7 @@ World::World() {
 
     grass = std::vector<std::vector<int>>(width, std::vector<int>(height, 0));
 
-    logger = BufferedLogger("world");
-    logger.log("world created", "SUCC");    
+    worldLogger.log("world created", "SUCC");    
 }
 
 void World::generate() {
@@ -24,13 +25,21 @@ void World::generate() {
     Array2DKeeper<int> hmap(width, height);
 
     generator.generate(hmap.getArray2D());
+
+
     int** array2d = hmap.getArray2D();
 
-    int thd = 0;
+    int cnt = 0;
     for(int x=0;x<width;x++)
         for(int y=0;y<height;y++) {
             h_map[x][y] = array2d[x][y];
+            if (h_map[x][y] >= 0) cnt++;
         }
+
+    if ((cnt < size * size / 10) || (cnt > size * size * 0.8)) {
+        generate();
+        worldLogger.log("regenerating world", "INFO");
+    }
 
 }
 
@@ -59,11 +68,11 @@ int World::getGrassAt(int x, int y) {
 }
 
 void World::spawnGrass() {
-    logger.log("spawning grass", "INFO");
+    worldLogger.log("spawning grass", "INFO");
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {
         grass[x][y] = (isLandAt(x, y) ? (0.5 * GRASS_MAX) : 0);
     }
-    logger.log("grass spawned", "SUCC");
+    worldLogger.log("grass spawned", "SUCC");
 }
 
 
