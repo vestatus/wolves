@@ -25,13 +25,21 @@ void World::generate() {
     Array2DKeeper<int> hmap(width, height);
 
     generator.generate(hmap.getArray2D());
+
+
     int** array2d = hmap.getArray2D();
 
-    int thd = 0;
+    int cnt = 0;
     for(int x=0;x<width;x++)
         for(int y=0;y<height;y++) {
             h_map[x][y] = array2d[x][y];
+            if (h_map[x][y] >= 0) cnt++;
         }
+
+    if ((cnt < size * size / 10) || (cnt > size * size * 0.8)) {
+        generate();
+        worldLogger.log("regenerating world", "INFO");
+    }
 
 }
 
