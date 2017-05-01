@@ -148,7 +148,7 @@ void SFMLManager::drawButtonBackground(Button& button, sf::Uint8* pixels) {
     for (int i=button.x; i < button.x + button.w; i++) {
         for(int j=button.y; j < button.y + button.h; j++) {
             RGB(pixels, i, j, button.cl, button.cl, button.cl);
-            if ((i - button.x - button.w + 1) * (j - button.y - button.h + 1) == 0)
+            if ((i - button.x) * (j - button.y - button.h + 1) == 0)
                 RGB(pixels, i, j, 0, 0, 0);
         }
     }
