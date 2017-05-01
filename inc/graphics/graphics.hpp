@@ -19,10 +19,10 @@ private:
     queue<sf::Event> clickEvents;
     void drawButtonBackground(Button& button, sf::Uint8* pixels);
     void drawButtonText(Button& button);
-    static void RGB(sf::Uint8* pixels, int x, int y, int r, int g, int b); // draw a dot into SFML buffer
+    static void RGBA(sf::Uint8* pixels, int x, int y, int r, int g, int b, int a); // draw a dot into SFML buffer
 public:
-    static const int width = 1000;
-    static const int height = 500;
+    static const int width = 700;
+    static const int height = 700;
     static const int framerate = 60;
     static const bool DRAW_HEIGHT = false; // whether to show terrain height on the map or not
     static const bool SMOOTH_LANDSCAPE = false;
