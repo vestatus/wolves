@@ -6,9 +6,11 @@
 
 int main()
 {
+    BufferedLogger mainLogger("main");
 
     // create the window
     SFMLManager manager("Wolves, hares and grass");
+    mainLogger.log("manager created", "SUCC");
 
     bool simulationRunning = true;
 
@@ -18,10 +20,12 @@ int main()
     });
     button.save();
 
-
+    mainLogger.log("buttons created", "SUCC");
 
     World world;
+    mainLogger.log("creating world", "INFO");
     world.generate();
+    mainLogger.log("spawning grass", "INFO");
     world.spawnGrass();
 
 
@@ -33,8 +37,12 @@ int main()
     });
     button.save();
 
+    mainLogger.log("buttons created", "SUCC");
+
     Animal::spawnAnimals(&world);
     
+
+    mainLogger.log("drawing the world for the first time", "INFO");
     manager.drawWorld(world);
 
     // run the main loop
@@ -56,6 +64,9 @@ int main()
             manager.render();
         }
     }
+
+
+    mainLogger.log("exiting successfully", "SUCC");
 
     return 0;
 }

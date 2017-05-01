@@ -19,7 +19,6 @@ public:
     static constexpr double GRASS_GROWTH_RATE = 1.02; // >= 1, needed for exponential grass growth
 private:
     std::vector<std::vector<int>> grass; // 2D-vector of grass
-    BufferedLogger logger;
     MyRandom randomGenerator; // generates random ints, see tools/MyRandom.hpp for more info
 
 public:

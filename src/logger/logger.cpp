@@ -2,6 +2,9 @@
 
 BufferedLogger::BufferedLogger(string fname) {
     this->fname = fname;
+    std::fstream stream;
+    stream.open("logs/" + fname, std::ios_base::out);
+    stream.close();
 }
 
 BufferedLogger::~BufferedLogger() {

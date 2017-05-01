@@ -14,7 +14,7 @@ using std::queue;
 class SFMLManager{ // This class encapsulates SFML
 private:
     sf::RenderWindow window;
-    BufferedLogger logger;
+    static BufferedLogger logger;
     queue<sf::Event> closeEvents;
     queue<sf::Event> clickEvents;
     void drawButtonBackground(Button& button, sf::Uint8* pixels);

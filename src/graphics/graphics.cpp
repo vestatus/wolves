@@ -1,12 +1,13 @@
 #include "../../inc/graphics/graphics.hpp"
 #define its (*it).
 
+BufferedLogger SFMLManager::logger("graphics");
+
 SFMLManager::SFMLManager(std::string title) {
     window.create(sf::VideoMode(width, height), title);
     window.setFramerateLimit(framerate);
     window.clear();
-
-    logger = BufferedLogger("graphics");
+    
     logger.log("SFMLManager created", "SUCC");
 }
 
