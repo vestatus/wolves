@@ -4,6 +4,7 @@
 #define square(x) ((x) * (x))
 
 list<Animal*> Animal::animals;
+list<Animal*> Animal::babies;
 
 Animal::Animal(World* world, pair<int, int> coords, AnimalType type) {
     this->world = world;
@@ -53,6 +54,25 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
 
     x += vx;
     y += vy;
+
+    const int BREEDING_RADIUS = 10;
+    const int MAX_BREEDING_HUNGER = 200;
+    const int BREEDING_DELTA_HUNGER = 500;
+
+    for (auto it=begin();it != end(); it++) {
+        if (((*it)->type == type) && 
+                (*it != this) &&
+                alive && (*it)->alive && 
+                (dist(getCoords(), (*it)->getCoords()) < BREEDING_RADIUS) &&
+                ((hunger < MAX_BREEDING_HUNGER) && ((*it)->hunger < MAX_BREEDING_HUNGER))
+                ) {
+            hunger += BREEDING_DELTA_HUNGER;
+            (*it)->hunger += BREEDING_DELTA_HUNGER;
+            pair<int, int> babyCoords = ((getCoords() + (*it)->getCoords()) / 2).as<int, int>();
+            babies.push_back(new Animal(world, babyCoords, type));
+            cout << "A baby " << ((type == AnimalType::WOLF) ? "WOLF" : "HARE") << " has been born at " << babyCoords.a << ";" << babyCoords.b << "\n";
+        }
+    }
 }
 
 pair<float, float> Animal::getSpeedVector() {
@@ -71,6 +91,12 @@ void Animal::takeTurns() {
     }
 
     removeDead();
+
+    for (auto it=babies.begin(); it != babies.end(); it++) {
+        animals.push_back(*it);
+    }
+
+    babies.clear();
 }
 
 void Animal::removeDead() {

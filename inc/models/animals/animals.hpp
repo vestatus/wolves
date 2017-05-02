@@ -17,6 +17,7 @@ enum AnimalType {
 class Animal {
 private:
     static list<Animal*> animals;
+    static list<Animal*> babies;
 
     World* world;
     float x, y;
