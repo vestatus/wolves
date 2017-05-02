@@ -14,11 +14,11 @@ public:
     static const int width = 513; // the world's real size, less or equal 
                                                 // to the size of what DiamondSquare generates
     static const int height = 513;
-    static const int GRASS_MAX = 255; // maximum amount of grass per tile
+    static const int GRASS_MAX = 50; // maximum amount of grass per tile
     static int SEA_LEVEL; // approximately zero
-    static constexpr double GRASS_GROWTH_RATE = 1.02; // >= 1, needed for exponential grass growth
+    static constexpr float GRASS_GROWTH_RATE = 0.2; // >= 0, needed for linear grass growth
 private:
-    std::vector<std::vector<int>> grass; // 2D-vector of grass
+    std::vector<std::vector<float>> grass; // 2D-vector of grass
     MyRandom randomGenerator; // generates random ints, see tools/MyRandom.hpp for more info
 
 public:

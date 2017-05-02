@@ -39,6 +39,7 @@ bool Animal::isAlive() {
 
 
 void Animal::takeTurn() { // decide where to go, become hungry, die etc.
+    age++;
     increaseHunger(hungerRate);
 
     eat();
@@ -55,14 +56,11 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
     x += vx;
     y += vy;
 
-    const int BREEDING_RADIUS = 10;
-    const int MAX_BREEDING_HUNGER = 200;
-    const int BREEDING_DELTA_HUNGER = 500;
-
     for (auto it=begin();it != end(); it++) {
         if (((*it)->type == type) && 
                 (*it != this) &&
                 alive && (*it)->alive && 
+                ((age >= MIN_BREEDING_AGE) && ((*it)->age >= MIN_BREEDING_AGE)) &&
                 (dist(getCoords(), (*it)->getCoords()) < BREEDING_RADIUS) &&
                 ((hunger < MAX_BREEDING_HUNGER) && ((*it)->hunger < MAX_BREEDING_HUNGER))
                 ) {
@@ -70,9 +68,11 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
             (*it)->hunger += BREEDING_DELTA_HUNGER;
             pair<int, int> babyCoords = ((getCoords() + (*it)->getCoords()) / 2).as<int, int>();
             babies.push_back(new Animal(world, babyCoords, type));
-            cout << "A baby " << ((type == AnimalType::WOLF) ? "WOLF" : "HARE") << " has been born at " << babyCoords.a << ";" << babyCoords.b << "\n";
+            // cout << "A baby " << ((type == AnimalType::WOLF) ? "WOLF" : "HARE") << " has been born at " << babyCoords.a << ";" << babyCoords.b << "\n";
         }
     }
+
+    if ((age > MAX_AGE) && alive ) die();
 }
 
 pair<float, float> Animal::getSpeedVector() {
