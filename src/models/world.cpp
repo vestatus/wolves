@@ -13,7 +13,7 @@ World::World() {
 
     randomGenerator.init(0, width, 1337);
 
-    grass = std::vector<std::vector<int>>(width, std::vector<int>(height, 0));
+    grass = std::vector<std::vector<float>>(width, std::vector<float>(height, 0));
 
     worldLogger.log("world created", "SUCC");    
 }
@@ -80,7 +80,7 @@ void World::tick() {
     // grow grass
     for (int x=0;x<width;x++) for(int y=0;y<height;y++) {
         if (grass[x][y] < GRASS_MAX - grass[x][y] * GRASS_GROWTH_RATE) {
-            grass[x][y]++;// = int(GRASS_GROWTH_RATE * grass[x][y]);
+            grass[x][y] += GRASS_GROWTH_RATE;
         }
     }
 }

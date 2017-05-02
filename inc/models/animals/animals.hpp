@@ -29,10 +29,16 @@ private:
     Vector2DRandom vectorRandom;
     void decreaseHunger(int delta);
     void increaseHunger(int delta);
+    double age = 0;
 public:
 	static const int maxHunger = 1000;
 	static const int hungerRate = 2; // how many hunger points the hare gains per turn
     static const int hareHungerValue = maxHunger / 2;
+    static const int BREEDING_RADIUS = 10;
+    static const int MAX_BREEDING_HUNGER = 100;
+    static const int BREEDING_DELTA_HUNGER = 800;
+    static const int MIN_BREEDING_AGE = 300;
+    static const int MAX_AGE = 1000;
 
     Animal(World* world, pair<int, int> coords, AnimalType type);
     int getType();
