@@ -86,15 +86,14 @@ void World::tick() {
 }
 
 
-int World::cutGrass(int x, int y, int r, int max, bool forReal) { // not tested, amy be buggy
-    const float k = 0.1;
+int World::cutGrass(int x, int y, int r, int max, bool forReal) { 
     int d;
     int cutting[2 * r + 1][2 * r + 1];
 
     int sum = 0;
     for (int i=-r;i<r+1;i++) for(int j=-r;j<r+1;j++) {
         if ((x + i >= 0) && (x + i < width) && (y + j >=0) && (y + j < height)) {
-            d = grass[x+i][y+j] * k;
+            d = grass[x+i][y+j] * GRASS_CUTTING_COEF;
             cutting[r + i][r + j] = d;
             sum += d;
         }
@@ -121,5 +120,5 @@ int World::cutGrass(int x, int y, int r, int max, bool forReal) { // not tested,
 
     //std::cout << "sum2 " << sum << "\n";
 
-    return sum;
+    return sum * GRASS_CUTTING_EFFICIENCY;
 }

@@ -107,3 +107,11 @@ HSV_to_RGB::rgb HSV_to_RGB::hsv2rgb(hsv in)
 float dist(pair<float, float> a, pair<float, float> b) {
     return hypot(a.a - b.a, a.b - b.b);
 }
+
+vector<pair<float, float>> getCircleOfAngledVectors(int num) {
+    vector<pair<float, float>> res;
+    for (int i=0;i<num;i++) {
+        res.push_back(pair<float, float>(cos(2 * 3.14 * i / num), sin(2 * 3.14 * i / num)));
+    }
+    return res;
+}
