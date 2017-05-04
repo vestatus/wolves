@@ -19,11 +19,11 @@ int Animal::getHunger() {return hunger;}
 Animal::~Animal() {}
 
 float Animal::getSpeed() {
-    float res = 1 - (float)hunger / maxHunger;
+    float res = 0.5 + (float)hunger / maxHunger / 2;
     if (! world->isLandAt(round(x), round(y))) {
         res /= 4;
     }
-    if (type == AnimalType::WOLF) res *= 1.7;
+    if (type == AnimalType::WOLF) res *= 1;
     return res;
 }
 
@@ -118,8 +118,6 @@ int Animal::getType() {
 }
 
 void Animal::spawnAnimals(World* world) {
-    const int N_hares = 50;
-    const int N_wolves = 5;
 
     for(auto it=animals.begin(); it != animals.end(); it++) {
         delete *it;
