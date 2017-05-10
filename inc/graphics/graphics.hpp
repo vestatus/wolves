@@ -20,6 +20,7 @@ private:
     void drawButtonBackground(Button& button, sf::Uint8* pixels);
     void drawButtonText(Button& button);
     static void RGBA(sf::Uint8* pixels, int x, int y, int r, int g, int b, int a); // draw a dot into SFML buffer
+    void drawAnimal(sf::Uint8* pixels, int x, int y, Animal* animal);
 public:
     static const int width = 700;
     static const int height = 700;

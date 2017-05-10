@@ -49,6 +49,22 @@ void SFMLManager::RGBA(sf::Uint8* pixels, int x, int y, int r, int g, int b, int
     pixels[pos + 3] = a;
 }
 
+void SFMLManager::drawAnimal(sf::Uint8* pixels, int x, int y, Animal* animal) {
+    const int maxR = 5; // px
+    const int R = maxR * sqrt(animal -> getHunger() * 1.0 / Animal::maxHunger);
+
+    for (int dx=-maxR; dx<maxR+1; dx++) {
+        for (int dy=-maxR; dy<maxR+1; dy++) {
+            if ((x + dx >= 0) && (y + dy >= 0) && (x + dx < width) && (y + dy < height) && (hypot(dx, dy) < maxR)) {
+                if (hypot(dx, dy) <= R) RGBA(pixels, x + dx, y + dy, 0, 0, 255);
+                else if (animal -> isHare()) RGBA(pixels, x + dx, y + dy, 0, 255, 0);
+                else RGBA(pixels, x + dx, y + dy, 255, 0, 0);
+            }
+        }
+    }
+}
+
+
 void SFMLManager::drawWorld(World &world) {
     logger.log("drawing world", "INFO");
     sf::Texture worldImage;
@@ -105,7 +121,7 @@ void SFMLManager::drawWorld(World &world) {
 
     // draw animals
     for (auto it=Animal::begin(); it != Animal::end(); it++) {
-        cnt++;
+        // cnt++;
 
         X = (*it)->getX();
         Y = (*it)->getY();
@@ -113,19 +129,21 @@ void SFMLManager::drawWorld(World &world) {
         x = X * width / world.width;
         y =  Y * height / world.height;
 
-        const int r = 4;
+        // const int r = 4;
 
-        int hung = (*it)->getHunger() * 255 / (*it)->maxHunger;
+        // int hung = (*it)->getHunger() * 255 / (*it)->maxHunger;
 
-        for ( int i = -r; i < r + 1; i++ ) 
-            for ( int j = -r; j < r + 1; j++ ) {
-                if ( (i * i + j * j) <= r * r) {
-                    RGBA(pixels, x + i, y + j, hung, 255 - hung, 0);
-                }
-                if (( (i * i + j * j) <= r * r / 4) && ((*it)->getType() == AnimalType::WOLF)) {
-                    RGBA(pixels, x + i, y + j, 255, 0 , 0);
-                }
-            }
+        // for ( int i = -r; i < r + 1; i++ ) 
+        //     for ( int j = -r; j < r + 1; j++ ) {
+        //         if ( (i * i + j * j) <= r * r) {
+        //             RGBA(pixels, x + i, y + j, hung, 255 - hung, 0);
+        //         }
+        //         if (( (i * i + j * j) <= r * r / 4) && ((*it)->getType() == AnimalType::WOLF)) {
+        //             RGBA(pixels, x + i, y + j, 255, 0 , 0);
+        //         }
+        //     }
+
+        drawAnimal(pixels, x, y, *it);
 
     }
 
