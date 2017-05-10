@@ -63,6 +63,18 @@ bool World::isLandAt(int x, int y) {
     }
 }
 
+bool World::isLandAt(pair<float, float> coords) {
+    int x = coords.a;
+    int y = coords.b;
+
+    if ((x >= 0) && (x < width) && (y >= 0) && (y < height)) {
+        return h_map[x][y] > SEA_LEVEL;
+    }
+    else {
+        return false;
+    }
+}
+
 int World::getGrassAt(int x, int y) {
     return grass[x][y];
 }

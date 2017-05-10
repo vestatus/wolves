@@ -19,7 +19,7 @@ int Animal::getHunger() {return hunger;}
 Animal::~Animal() {}
 
 float Animal::getSpeed() {
-    float res = 0.5 + (float)hunger / maxHunger / 2;
+    float res = 0.8 + (float)hunger / maxHunger / 5;
     if (! world->isLandAt(round(x), round(y))) {
         res /= 4;
     }
