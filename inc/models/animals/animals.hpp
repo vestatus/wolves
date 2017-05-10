@@ -31,16 +31,16 @@ private:
     void increaseHunger(int delta);
     double age = 0;
 public:
-	static const int maxHunger = 2000;
+	static const int maxHunger = 3000;
 	static const int hungerRate = 2; // how many hunger points the animal gains per turn
-    static const int hareHungerValue = maxHunger / 2;
+    static const int hareHungerValue = maxHunger / 10;
     static const int BREEDING_RADIUS = 10;
     static const int MAX_BREEDING_HUNGER = 200;
-    static const int BREEDING_DELTA_HUNGER = 500;
+    static const int BREEDING_DELTA_HUNGER = 800;
     static const int MIN_BREEDING_AGE = 300;
-    static const int MAX_AGE = 1000;
+    static const int MAX_AGE = 10000;
     static const int N_hares = 50;
-    static const int N_wolves = 5;
+    static const int N_wolves = 6;
 
     Animal(World* world, pair<int, int> coords, AnimalType type);
     int getType();
