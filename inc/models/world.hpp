@@ -16,9 +16,11 @@ public:
     static const int height = 513;
     static const int GRASS_MAX = 255; // maximum amount of grass per tile
     static int SEA_LEVEL; // approximately zero
-    static constexpr double GRASS_GROWTH_RATE = 1.02; // >= 1, needed for exponential grass growth
+    static constexpr float GRASS_GROWTH_RATE = 0.1; // >= 0, needed for linear grass growth
+    static constexpr float GRASS_CUTTING_COEF = 1;
+    static constexpr float GRASS_CUTTING_EFFICIENCY = 0.1;
 private:
-    std::vector<std::vector<int>> grass; // 2D-vector of grass
+    std::vector<std::vector<float>> grass; // 2D-vector of grass
     MyRandom randomGenerator; // generates random ints, see tools/MyRandom.hpp for more info
 
 public:
@@ -34,6 +36,7 @@ public:
     int cutGrass(int x, int y, int r, int max, bool forReal=true);
 
     bool isLandAt(int x, int y); // is it land or sea at (x, y)?
+    bool isLandAt(pair<float, float> coords);
     void readIslands(); // deprecated
     void generate(); // generate this world
     void tick(); // update the world: grow grass etc.

@@ -1,6 +1,9 @@
 #pragma once
 #include "../tools/containers.hpp"
 #include <cmath>
+#include <vector>
+
+using std::vector;
 
 class HSV_to_RGB {
 public:
@@ -22,3 +25,5 @@ public:
 };
 
 float dist(pair<float, float> a, pair<float, float> b);
+
+vector<pair<float, float>> getCircleOfAngledVectors(int num);

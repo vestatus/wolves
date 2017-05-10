@@ -91,6 +91,19 @@ public:
         return pair<A, B>(-a, -b);
     }
 
+    pair<A, B> operator / (float other) {
+        return pair<A, B>(a / other, b / other);
+    }
+
+    pair<A, B> operator * (float other) {
+        return pair<A, B>(a * other, b * other);
+    }
+
+    template <typename C, typename D>
+    pair<C, D> as() {
+        return pair<C, D>((C)a, (D)b);
+    }
+
     float getLength() {
         return hypot(a, b);
     }

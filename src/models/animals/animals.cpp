@@ -4,6 +4,7 @@
 #define square(x) ((x) * (x))
 
 list<Animal*> Animal::animals;
+list<Animal*> Animal::babies;
 
 Animal::Animal(World* world, pair<int, int> coords, AnimalType type) {
     this->world = world;
@@ -18,11 +19,11 @@ int Animal::getHunger() {return hunger;}
 Animal::~Animal() {}
 
 float Animal::getSpeed() {
-    float res = 1 - (float)hunger / maxHunger;
+    float res = 0.8 + (float)hunger / maxHunger / 5;
     if (! world->isLandAt(round(x), round(y))) {
         res /= 4;
     }
-    if (type == AnimalType::WOLF) res *= 1.7;
+    if (type == AnimalType::WOLF) res *= 1;
     return res;
 }
 
@@ -38,6 +39,7 @@ bool Animal::isAlive() {
 
 
 void Animal::takeTurn() { // decide where to go, become hungry, die etc.
+    age++;
     increaseHunger(hungerRate);
 
     eat();
@@ -53,6 +55,24 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
 
     x += vx;
     y += vy;
+
+    for (auto it=begin();it != end(); it++) {
+        if (((*it)->type == type) && 
+                (*it != this) &&
+                alive && (*it)->alive && 
+                ((age >= MIN_BREEDING_AGE) && ((*it)->age >= MIN_BREEDING_AGE)) &&
+                (dist(getCoords(), (*it)->getCoords()) < BREEDING_RADIUS) &&
+                ((hunger < MAX_BREEDING_HUNGER) && ((*it)->hunger < MAX_BREEDING_HUNGER))
+                ) {
+            hunger += BREEDING_DELTA_HUNGER;
+            (*it)->hunger += BREEDING_DELTA_HUNGER;
+            pair<int, int> babyCoords = ((getCoords() + (*it)->getCoords()) / 2).as<int, int>();
+            babies.push_back(new Animal(world, babyCoords, type));
+            // cout << "A baby " << ((type == AnimalType::WOLF) ? "WOLF" : "HARE") << " has been born at " << babyCoords.a << ";" << babyCoords.b << "\n";
+        }
+    }
+
+    if ((age > MAX_AGE) && alive ) die();
 }
 
 pair<float, float> Animal::getSpeedVector() {
@@ -71,6 +91,12 @@ void Animal::takeTurns() {
     }
 
     removeDead();
+
+    for (auto it=babies.begin(); it != babies.end(); it++) {
+        animals.push_back(*it);
+    }
+
+    babies.clear();
 }
 
 void Animal::removeDead() {
@@ -92,8 +118,6 @@ int Animal::getType() {
 }
 
 void Animal::spawnAnimals(World* world) {
-    const int N_hares = 50;
-    const int N_wolves = 5;
 
     for(auto it=animals.begin(); it != animals.end(); it++) {
         delete *it;
