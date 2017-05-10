@@ -21,7 +21,7 @@ private:
 
     World* world;
     float x, y;
-    float vx, vy;
+    float vx=0, vy=0;
 	AnimalType type;
     int hunger=0;
     bool alive=true;
