@@ -23,7 +23,7 @@ float Animal::getSpeed() {
     if (! world->isLandAt(round(x), round(y))) {
         res /= 4;
     }
-    if (type == AnimalType::WOLF) res *= 1;
+    if (type == AnimalType::WOLF) res *= WOLF_SPEED_MULTIPLIER;
     return res;
 }
 
@@ -46,7 +46,7 @@ void Animal::takeTurn() { // decide where to go, become hungry, die etc.
 
     //std::cout << hunger << "\n";
 
-    auto vec = decideWhereToGo().scale(1);
+    auto vec = (decideWhereToGo().scale(1) + getSpeedVector().scale(0.1)).scale(1);
 
     //std::cout << (int)vec.a << " " << (int)vec.b << "\n";
 

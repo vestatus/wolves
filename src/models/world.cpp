@@ -36,7 +36,7 @@ void World::generate() {
             if (h_map[x][y] >= 0) cnt++;
         }
 
-    if ((cnt < size * size / 10) || (cnt > size * size * 0.8)) {
+    if ((cnt < size * size * MIN_LAND) || (cnt > size * size * MAX_LAND)) {
         generate();
         worldLogger.log("regenerating world", "INFO");
     }

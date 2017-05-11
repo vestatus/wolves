@@ -6,9 +6,9 @@ float d;
 Animal* nearest_hare = nullptr;
 Animal* nearest_wolf = nullptr;
 
-const int MIN_CHASING_HUNGER = maxHunger / 4;
+const int MIN_CHASING_HUNGER = MAX_BREEDING_HUNGER;
 const int MAX_CLUSTER_DIST = 40;
-const int MIN_CLUSTER_DIST = 10;
+const int MIN_CLUSTER_DIST = 5;
 const int DESIRED_CLUSTER_SIZE = 5;
 bool UNCOMFORTABLY_CLOSE = false;
 pair<float, float> outOfCluster(0, 0);
@@ -37,13 +37,21 @@ if (UNCOMFORTABLY_CLOSE && (world->isLandAt(getCoords() + outOfCluster * 10))) r
 if ((age > MIN_BREEDING_AGE ) && (hunger < MAX_BREEDING_HUNGER) && (nearest_wolf != nullptr)) 
 	return pair<float, float>(nearest_wolf->getX() - x, nearest_wolf->getY() - y);
 
-if ((nearest_hare == nullptr) || (hunger < MIN_CHASING_HUNGER)) {
+if (((target == nullptr) || (! target->isAlive())) && (hunger < MIN_CHASING_HUNGER) && (nearest_hare != nullptr)) {
+	target = nearest_hare;
+}
+
+if ((target == nullptr) || (hunger < MIN_CHASING_HUNGER)) {
 	if ((nearest_wolf != nullptr) && (wolvesAround < DESIRED_CLUSTER_SIZE) && (wolf_dist > MAX_CLUSTER_DIST)) {
 		return pair<float, float>(nearest_wolf->getX() - x, nearest_wolf->getY() - y);
 	}
-	else {
+	else if (nearest_hare == nullptr) {
 		return pair<float, float>(0, 0);
+	} else {
+		return pair<float, float>(nearest_hare->getX() - x, nearest_hare->getY() - y);
 	}
-} else {
+} else if (nearest_hare != nullptr) {
 	return pair<float, float>(nearest_hare->getX() - x, nearest_hare->getY() - y);
 }
+
+return vectorRandom.next();

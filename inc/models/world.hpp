@@ -15,8 +15,10 @@ public:
                                                 // to the size of what DiamondSquare generates
     static const int height = 513;
     static const int GRASS_MAX = 255; // maximum amount of grass per tile
+    static constexpr float MIN_LAND = 0.1;
+    static constexpr float MAX_LAND = 0.2;
     static int SEA_LEVEL; // approximately zero
-    static constexpr float GRASS_GROWTH_RATE = 0.1; // >= 0, needed for linear grass growth
+    static constexpr float GRASS_GROWTH_RATE = 0.3; // >= 0, needed for linear grass growth
     static constexpr float GRASS_CUTTING_COEF = 1;
     static constexpr float GRASS_CUTTING_EFFICIENCY = 0.1;
 private:
