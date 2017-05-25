@@ -112,7 +112,8 @@ void SFMLManager::drawWorld(World &world) {
             }
             
         } else {
-           RGBA(pixels, x, y, (255+ht)/2, (255+ht)/2, 255 + ht / 2); // ht < 0
+            if (winterFilter) RGBA(pixels, x, y, (3*255+ht)/4, (3*255+ht)/4, 255 + ht / 2); // ht < 0
+            else RGBA(pixels, x, y, (255+ht)/2, (255+ht)/2, 255 + ht / 2); // ht < 0
         }
 
     }
