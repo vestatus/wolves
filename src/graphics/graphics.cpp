@@ -69,6 +69,7 @@ void SFMLManager::drawWorld(World &world) {
     logger.log("drawing world", "INFO");
     sf::Texture worldImage;
 
+    bool winterFilter = world.isWinter();
 
     worldImage.create(width, height);
 
@@ -104,9 +105,10 @@ void SFMLManager::drawWorld(World &world) {
             int gr = round(grass * 1.0 / world.GRASS_MAX);
             
             if ((ht < 10) && (ht >= 0)) {
-               RGBA(pixels, x, y, 200, 200, 100);
+               RGBA(pixels, x, y, 200 + (winterFilter ? 25 : 0), 200+ (winterFilter ? 25 : 0), 100+ (winterFilter ? 25 : 0));
             } else {
-                RGBA(pixels, x, y, (255 - ht) *3/4, 255 * 3 /4, ht / 2, grass);
+                if (winterFilter) RGBA(pixels, x, y, 255, 255, 255);
+                else RGBA(pixels, x, y, (255 - ht) *3/4, 255 * 3 /4, ht / 2, grass);
             }
             
         } else {

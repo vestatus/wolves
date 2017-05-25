@@ -15,6 +15,8 @@ public:
                                                 // to the size of what DiamondSquare generates
     static const int height = 513;
     static const int GRASS_MAX = 255; // maximum amount of grass per tile
+    static const int CATACLYSM_TIME = 200;
+    static const int CATACLYSM_DURATION = 500;
     static constexpr float MIN_LAND = 0.1;
     static constexpr float MAX_LAND = 0.2;
     static int SEA_LEVEL; // approximately zero
@@ -24,12 +26,18 @@ public:
 private:
     std::vector<std::vector<float>> grass; // 2D-vector of grass
     MyRandom randomGenerator; // generates random ints, see tools/MyRandom.hpp for more info
+    int time = 0;
+    int baseTemperature = 20;
+    bool winter = false;
 
 public:
     int h_map[width][height]; // how elevated the tile at (x, y) is. In range(-inf, inf)
 
     pair<int, int> getRandomLand(); // get a pair of random coordinates. 
                                         // At these coordinates there should be land, and not sea
+    int getTime();
+    int getTemperature();
+    bool isWinter();
     void spawnGrass();
     int getGrassAt(int x, int y); // get the amount of grass at (x, y). In range(0, GRASS_MAX)
 

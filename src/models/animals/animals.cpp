@@ -152,7 +152,7 @@ void Animal::decreaseHunger(int delta) {
 }
 
 void Animal::increaseHunger(int delta) {
-    hunger += delta;
+    hunger += world->isWinter() ? (delta * 2) : delta;
     if (hunger > maxHunger) die();
 }
 

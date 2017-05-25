@@ -18,6 +18,10 @@ World::World() {
     worldLogger.log("world created", "SUCC");    
 }
 
+bool World::isWinter() {
+    return winter;
+}
+
 void World::generate() {
 
     int size = max(width, height);
@@ -95,8 +99,32 @@ void World::tick() {
             grass[x][y] += GRASS_GROWTH_RATE;
         }
     }
+
+    time++;
+
+    if ((time == CATACLYSM_TIME) && (! winter)) {
+        time = 0;
+        winter = true;
+        std::cout << "winter has begun\n";
+    } else if ((time == CATACLYSM_DURATION) && (winter)) {
+        time = 0;
+        winter = false;
+        std::cout << "winter has ended\n";
+    }
 }
 
+
+int World::getTime() {
+    return time;
+}
+
+int World::getTemperature() {
+    if (winter) {
+        return baseTemperature;
+    } else {
+        return baseTemperature - 40;
+    }
+}
 
 int World::cutGrass(int x, int y, int r, int max, bool forReal) { 
     int d;
