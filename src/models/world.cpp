@@ -102,6 +102,9 @@ void World::tick() {
 
     time++;
 
+    if (! winter && time < 50) SEA_LEVEL++;
+    if (! winter && time > CATACLYSM_TIME - 50) SEA_LEVEL--;
+
     if ((time == CATACLYSM_TIME) && (! winter)) {
         time = 0;
         winter = true;

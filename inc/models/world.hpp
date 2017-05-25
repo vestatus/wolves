@@ -15,8 +15,8 @@ public:
                                                 // to the size of what DiamondSquare generates
     static const int height = 513;
     static const int GRASS_MAX = 255; // maximum amount of grass per tile
-    static const int CATACLYSM_TIME = 200;
-    static const int CATACLYSM_DURATION = 500;
+    static const int CATACLYSM_TIME = 1000;
+    static const int CATACLYSM_DURATION = 1000;
     static constexpr float MIN_LAND = 0.1;
     static constexpr float MAX_LAND = 0.2;
     static int SEA_LEVEL; // approximately zero
